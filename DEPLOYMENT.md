@@ -117,7 +117,9 @@ DATABASE_URL=postgresql://...
 JWT_SECRET=dug-random-secret-minimum-32-karaktera
 JWT_ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=480
-ADMIN_EMAIL=admin@cvecarairig.rs
+ADMIN_EMAIL=darkotosic1986@gmail.com
+ADMIN_PASSWORD=<set-in-render-secret-env>
+ADMIN_FULL_NAME=Cvećara Irig Admin
 ALLOW_PUBLIC_REGISTRATION=false
 BOOTSTRAP_ADMIN_TOKEN=privremeno-samo-za-prvo-kreiranje-admina
 RATE_LIMIT_DEFAULT=120/minute
@@ -138,7 +140,7 @@ SENTRY_DSN=
 SENTRY_ENVIRONMENT=production
 ```
 
-Use `JWT_SECRET` for token signing. `MEDIA_PROVIDER=cloudinary` requires `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` before admin uploads are production-ready. Remove or rotate `BOOTSTRAP_ADMIN_TOKEN` immediately after creating the first admin account, then restart the Render service and verify bootstrap admin creation no longer works.
+Use `JWT_SECRET` for token signing. `MEDIA_PROVIDER=cloudinary` requires `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` before admin uploads are production-ready. Set `ADMIN_PASSWORD` in Render secret environment variables to the requested admin password before the first deploy, then remove or rotate `BOOTSTRAP_ADMIN_TOKEN` immediately after creating the first admin account, then restart the Render service and verify bootstrap admin creation no longer works.
 
 ## Local Docker Compose
 
