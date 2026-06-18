@@ -1,0 +1,28 @@
+[build]
+base = "apps/web"
+command = "npm run build"
+publish = ".next"
+
+[build.environment]
+NODE_VERSION = "22"
+NEXT_PUBLIC_SITE_URL = "https://simeonshop.rs"
+NEXT_PUBLIC_BRAND_NAME = "Simeon Shop"
+NEXT_PUBLIC_DEFAULT_LOCALE = "sr"
+ADMIN_ALLOWED_ORIGINS = "https://simeonshop.rs,https://www.simeonshop.rs"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
+[[headers]]
+for = "/_next/static/*"
+[headers.values]
+Cache-Control = "max-age=31536000, immutable"
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"

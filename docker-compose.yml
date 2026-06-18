@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: simeonshop-postgres
+    environment:
+      POSTGRES_DB: simeonshop
+      POSTGRES_USER: simeonshop
+      POSTGRES_PASSWORD: simeonshop
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - simeonshop-network
+
+  backend:
+    container_name: simeonshop-api
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+      APP_NAME: SimeonShop API
+      PROJECT_VERSION: 0.3.0
+      API_PREFIX: /api/v1
+      ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      FRONTEND_URL: http://localhost:3000
+      DATABASE_URL: postgresql://simeonshop:simeonshop@postgres:5432/simeonshop
+      JWT_SECRET: local-dev-secret-change-before-production
+      JWT_ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+      ADMIN_EMAIL: admin@simeonshop.rs
+      RATE_LIMIT_DEFAULT: 120/minute
+      RATE_LIMIT_AUTH: 10/minute
+      BOOTSTRAP_ADMIN_TOKEN: local-bootstrap-token
+      RATE_LIMIT_CHECKOUT: 5/minute
+      MEDIA_PROVIDER: external_url
+      SENTRY_DSN: ""
+      LOG_LEVEL: INFO
+      HOST: 0.0.0.0
+      PORT: 8000
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      - postgres
+    networks:
+      - simeonshop-network
+
+  frontend:
+    container_name: simeonshop-web
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      NEXT_PUBLIC_BRAND_NAME: Simeon Shop
+      NEXT_PUBLIC_DEFAULT_LOCALE: sr
+      API_BASE_URL: http://backend:8000
+      ADMIN_ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      NODE_ENV: development
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+    networks:
+      - simeonshop-network
+
+volumes:
+  postgres_data:
+
+networks:
+  simeonshop-network:
+    driver: bridge
