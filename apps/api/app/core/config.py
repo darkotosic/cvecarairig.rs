@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     ADMIN_EMAIL: str = "admin@cvecarairig.rs"
+    ADMIN_PASSWORD: str | None = None
+    ADMIN_FULL_NAME: str = "Cvećara Irig Admin"
     ALLOW_PUBLIC_REGISTRATION: bool = False
     BOOTSTRAP_ADMIN_TOKEN: str | None = None
 

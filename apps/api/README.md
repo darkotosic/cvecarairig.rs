@@ -104,10 +104,13 @@ MEDIA_PROVIDER=cloudinary
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
+ADMIN_EMAIL=darkotosic1986@gmail.com
+ADMIN_PASSWORD=<local-admin-password>
+ADMIN_FULL_NAME=Cvećara Irig Admin
 BOOTSTRAP_ADMIN_TOKEN=temporary-local-bootstrap-token
 ```
 
-Remove or blank `BOOTSTRAP_ADMIN_TOKEN` after the first admin exists. Production Cloudinary upload requires the Cloudinary variables above.
+When `ADMIN_PASSWORD` is set, startup seeding creates or promotes `ADMIN_EMAIL` as an active admin user and refreshes the password hash. Remove or blank `BOOTSTRAP_ADMIN_TOKEN` after the first admin exists. Production Cloudinary upload requires the Cloudinary variables above.
 
 ### CORS Configuration
 CORS is configured to allow requests from `ALLOWED_ORIGINS`:
