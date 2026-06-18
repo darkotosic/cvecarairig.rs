@@ -1,4 +1,4 @@
-# SimeonShop.rs Launch Checklist
+# cvecarairig.rs Launch Checklist
 
 ## Backend
 
@@ -6,7 +6,7 @@
 - [ ] `pytest` passes in `apps/api`.
 - [ ] `alembic upgrade head` passes against production database.
 - [ ] `/api/v1/health` returns `status=ok` and `database=ok`.
-- [ ] CORS allows `https://simeonshop.rs` and does not use `*` in production.
+- [ ] CORS allows `https://cvecarairig.rs` and does not use `*` in production.
 - [ ] `JWT_SECRET` is strong and not a default value.
 - [ ] `BOOTSTRAP_ADMIN_TOKEN` is removed after first admin creation.
 - [ ] SMTP settings are configured or explicitly disabled with checkout still succeeding.
@@ -27,8 +27,8 @@
 - [ ] Admin login works.
 - [ ] Admin CRUD for products, categories, images, variants, settings, and orders works.
 - [ ] Admin image upload works through the protected proxy without breaking multipart bodies.
-- [ ] ADMIN_ALLOWED_ORIGINS uključuje https://simeonshop.rs.
-- [ ] ADMIN_ALLOWED_ORIGINS uključuje https://www.simeonshop.rs.
+- [ ] ADMIN_ALLOWED_ORIGINS uključuje https://cvecarairig.rs.
+- [ ] ADMIN_ALLOWED_ORIGINS uključuje https://www.cvecarairig.rs.
 - [ ] admin mutation requestovi ne vraćaju 403 na produkcionom domenu.
 
 ## Order lifecycle

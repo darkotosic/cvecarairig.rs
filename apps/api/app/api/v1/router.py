@@ -14,7 +14,7 @@ def health_check(db: Session = Depends(get_db)):
     db.execute(text("SELECT 1"))
     return {
         "status": "ok",
-        "message": "SimeonShop.rs API is running",
+        "message": "cvecarairig.rs API is running",
         "version": settings.PROJECT_VERSION,
         "environment": settings.APP_ENV,
         "database": "ok",

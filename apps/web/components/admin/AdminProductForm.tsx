@@ -72,6 +72,12 @@ export function AdminProductForm({
       image_url: String(form.get('image_url') || '') || null,
       material: String(form.get('material') || '') || null,
       care_instructions: String(form.get('care_instructions') || '') || null,
+      arrangement_type: String(form.get('arrangement_type') || '') || null,
+      occasion: String(form.get('occasion') || '') || null,
+      color_palette: String(form.get('color_palette') || '') || null,
+      flower_count: form.get('flower_count') ? Number(form.get('flower_count')) : null,
+      is_same_day_delivery: form.get('is_same_day_delivery') === 'on',
+      lead_time_hours: Number(form.get('lead_time_hours') || 2),
       seo_title: String(form.get('seo_title') || '') || null,
       seo_description: String(form.get('seo_description') || '') || null,
       sort_order: Number(form.get('sort_order') || 0),
@@ -132,9 +138,15 @@ export function AdminProductForm({
       </fieldset>
 
       <fieldset className="grid gap-3 md:grid-cols-2">
-        <legend className="mb-2 font-semibold text-slate-900">Materijal i održavanje</legend>
-        <label className="text-sm font-medium">Materijal<input name="material" defaultValue={product?.material ?? ''} className={input} /></label>
-        <label className="text-sm font-medium">Instrukcije održavanja<input name="care_instructions" defaultValue={product?.care_instructions ?? ''} className={input} /></label>
+        <legend className="mb-2 font-semibold text-slate-900">Cvećarski detalji</legend>
+        <label className="text-sm font-medium">Sastav aranžmana<input name="material" defaultValue={product?.material ?? ''} className={input} /></label>
+        <label className="text-sm font-medium">Instrukcije za negu<input name="care_instructions" defaultValue={product?.care_instructions ?? ''} className={input} /></label>
+      <label className="text-sm font-medium">Tip aranžmana<input name="arrangement_type" defaultValue={product?.arrangement_type ?? ''} placeholder="buket, flower box, korpa, ruže" className={input} /></label>
+        <label className="text-sm font-medium">Prilika<input name="occasion" defaultValue={product?.occasion ?? ''} placeholder="rođendan, godišnjica, slava" className={input} /></label>
+        <label className="text-sm font-medium">Paleta boja<input name="color_palette" defaultValue={product?.color_palette ?? ''} className={input} /></label>
+        <label className="text-sm font-medium">Broj cvetova<input name="flower_count" type="number" min="0" defaultValue={product?.flower_count ?? ''} className={input} /></label>
+        <label className="flex items-center gap-2 text-sm"><input name="is_same_day_delivery" type="checkbox" defaultChecked={product?.is_same_day_delivery ?? true} /> Dostava istog dana</label>
+        <label className="text-sm font-medium">Vreme pripreme u satima<input name="lead_time_hours" type="number" min="0" defaultValue={product?.lead_time_hours ?? 2} className={input} /></label>
       </fieldset>
     </form>
   );

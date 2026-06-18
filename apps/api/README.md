@@ -1,6 +1,6 @@
-# Backend - SimeonShop.rs API
+# Backend - cvecarairig.rs API
 
-FastAPI-based REST API for SimeonShop.rs e-commerce platform. Current status: pre-production foundation with PostgreSQL/Alembic models, JWT admin auth, protected admin routes, guest checkout, order lifecycle validation, checkout validation, audit logs, and Cloudinary-ready product image upload.
+FastAPI-based REST API for cvecarairig.rs e-commerce platform. Current status: pre-production foundation with PostgreSQL/Alembic models, JWT admin auth, protected admin routes, guest checkout, order lifecycle validation, checkout validation, audit logs, and Cloudinary-ready product image upload.
 
 ## 🚀 Quick Start
 

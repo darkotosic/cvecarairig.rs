@@ -29,18 +29,18 @@ export default async function TermsPage() {
       <section className="mt-8 space-y-3">
         <h2 className="text-2xl font-semibold text-slate-900">Poručivanje</h2>
         <p>Porudžbina se kreira kroz checkout unosom kontakt podataka, adrese za dostavu, izabranih artikala, količina i prihvatanjem ovih uslova.</p>
-        <p>Nakon slanja porudžbine sistem čuva podatke o artiklima i kupcu kako porudžbina ne bi bila izgubljena ako opciona email potvrda nije dostupna.</p>
+        <p>Nakon slanja porudžbine sistem čuva podatke o artiklima i kupcu kako porudžbina ne bi bila izgubljena ako opciona email potvrda nije dostupna.</p><p>Porudžbina je prihvaćena tek nakon potvrde cvećare. Fotografije su informativne; izgled aranžmana može blago varirati zbog sezonske dostupnosti cveća. Cvećara može predložiti zamenu cveta iste vrednosti ako konkretan cvet nije dostupan.</p>
       </section>
       <section className="mt-8 space-y-3">
         <h2 className="text-2xl font-semibold text-slate-900">Cene i plaćanje</h2>
-        <p>Cene proizvoda su prikazane na stranici proizvoda. Plaćanje je trenutno navedeno kao plaćanje pouzećem, prilikom preuzimanja pošiljke.</p>
+        <p>Cene proizvoda su prikazane na stranici proizvoda. Cena i dostava se potvrđuju pre finalne realizacije ako postoji specifičan zahtev kupca. Plaćanje je moguće pouzećem, uplatom na račun ili po dogovoru.</p>
       </section>
       <section className="mt-8 space-y-3">
         <h2 className="text-2xl font-semibold text-slate-900">Dostava</h2>
         <p>{settings.delivery_note ?? 'Detalji dostave trenutno nisu javno podešeni. Prodavac treba da potvrdi način, rok i trošak dostave pre slanja pošiljke.'}</p>
       </section>
       <section className="mt-8 space-y-3">
-        <h2 className="text-2xl font-semibold text-slate-900">Povraćaj, zamene i reklamacije</h2>
+        <h2 className="text-2xl font-semibold text-slate-900">Reklamacije</h2>
         <p>{settings.return_policy_short ?? 'Pravila povraćaja, zamena i reklamacija trenutno nisu javno podešena. Kupac treba da kontaktira prodavca sa brojem porudžbine pre slanja proizvoda nazad.'}</p>
       </section>
       <section className="mt-8 space-y-3">

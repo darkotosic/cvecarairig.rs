@@ -40,8 +40,8 @@ function payloadFromForm(form: FormData, isActive: boolean): VariantPayload {
 function VariantCreateForm({ saving, onSubmit }: { saving: boolean; onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {
   return (
     <form onSubmit={onSubmit} className="grid gap-2 rounded-2xl bg-slate-50 p-3 md:grid-cols-6">
-      <label className="text-xs font-semibold text-slate-600">Veličina<input name="size" className="mt-1 w-full border px-2 py-2" /></label>
-      <label className="text-xs font-semibold text-slate-600">Boja<input name="color" className="mt-1 w-full border px-2 py-2" /></label>
+      <label className="text-xs font-semibold text-slate-600">Dimenzija aranžmana<input name="size" className="mt-1 w-full border px-2 py-2" /></label>
+      <label className="text-xs font-semibold text-slate-600">Paleta boja<input name="color" className="mt-1 w-full border px-2 py-2" /></label>
       <label className="text-xs font-semibold text-slate-600">SKU<input name="sku" className="mt-1 w-full border px-2 py-2" /></label>
       <label className="text-xs font-semibold text-slate-600">Cena RSD<input name="price" type="number" step="0.01" min="0" className="mt-1 w-full border px-2 py-2" /></label>
       <label className="text-xs font-semibold text-slate-600">Zalihe<input name="stock_quantity" type="number" min="0" defaultValue={0} className="mt-1 w-full border px-2 py-2" /></label>
@@ -53,8 +53,8 @@ function VariantCreateForm({ saving, onSubmit }: { saving: boolean; onSubmit: (e
 function VariantRow({ variant, saving, onSave, onDeactivate }: { variant: ProductVariant; saving: boolean; onSave: (event: FormEvent<HTMLFormElement>) => void; onDeactivate: () => void }) {
   return (
     <form onSubmit={onSave} className="grid gap-2 rounded-xl border border-slate-100 p-2 text-sm md:grid-cols-8">
-      <label className="text-xs font-semibold text-slate-600">Veličina<input name="size" defaultValue={variant.size ?? ''} className="mt-1 w-full border px-2 py-1" /></label>
-      <label className="text-xs font-semibold text-slate-600">Boja<input name="color" defaultValue={variant.color ?? ''} className="mt-1 w-full border px-2 py-1" /></label>
+      <label className="text-xs font-semibold text-slate-600">Dimenzija aranžmana<input name="size" defaultValue={variant.size ?? ''} className="mt-1 w-full border px-2 py-1" /></label>
+      <label className="text-xs font-semibold text-slate-600">Paleta boja<input name="color" defaultValue={variant.color ?? ''} className="mt-1 w-full border px-2 py-1" /></label>
       <label className="text-xs font-semibold text-slate-600">SKU<input name="sku" defaultValue={variant.sku ?? ''} className="mt-1 w-full border px-2 py-1" /></label>
       <label className="text-xs font-semibold text-slate-600">Cena RSD<input name="price" type="number" step="0.01" min="0" defaultValue={toRsd(variant.price_cents)} className="mt-1 w-full border px-2 py-1" /></label>
       <label className="text-xs font-semibold text-slate-600">Zalihe<input name="stock_quantity" type="number" min="0" defaultValue={variant.stock_quantity} className="mt-1 w-full border px-2 py-1" /></label>

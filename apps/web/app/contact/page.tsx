@@ -5,7 +5,7 @@ import { loadPublicStoreSettings } from '@/lib/store-settings';
 export const metadata: Metadata = {
   title: 'Kontakt',
   alternates: { canonical: '/contact' },
-  description: 'Kontakt podaci za pitanja o proizvodima, porudžbinama, dostavi, zamenama i reklamacijama.',
+  description: 'Kontakt podaci za pitanja o aranžmanima, porudžbinama, dostavi, reklamacijama i reklamacijama.',
 };
 
 export default async function ContactPage() {
@@ -14,7 +14,7 @@ export default async function ContactPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <SectionHeader title="Kontakt" description="Za pitanja o proizvodima, porudžbinama, dostavi, zamenama i reklamacijama koristite javno podešene kontakte prodavnice." />
+      <SectionHeader title="Kontakt" description="Za pitanja o aranžmanima, porudžbinama, dostavi, reklamacijama i reklamacijama koristite javno podešene kontakte prodavnice." />
       <div className="mt-8 space-y-3 rounded-3xl border border-slate-200 bg-white p-6 text-slate-700">
         {settings.store_email && <p><strong>Email:</strong> {settings.store_email}</p>}
         {settings.store_phone && <p><strong>Telefon:</strong> {settings.store_phone}</p>}

@@ -50,7 +50,7 @@ async function proxy(request: NextRequest, context: Context) {
     return NextResponse.json({ detail: 'Invalid admin request origin.' }, { status: 403 });
   }
 
-  const token = (await cookies()).get('simeonshop_admin_token')?.value;
+  const token = (await cookies()).get('cvecarairig_admin_token')?.value;
   if (!token) return NextResponse.json({ detail: 'Admin session is missing.' }, { status: 401 });
 
   const headers = new Headers();

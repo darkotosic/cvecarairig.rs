@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     API_PREFIX: str = "/api/v1"
-    APP_NAME: str = "SimeonShop API"
+    APP_NAME: str = "CvecaraIrig API"
     APP_ENV: str = "development"
     PROJECT_VERSION: str = "0.3.0"
 
@@ -17,12 +17,12 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000"
     FRONTEND_URL: str = "http://localhost:3000"
 
-    DATABASE_URL: str = "sqlite:///./simeonshop.db"
+    DATABASE_URL: str = "sqlite:///./cvecarairig.db"
 
     JWT_SECRET: str = "change-me-in-production"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
-    ADMIN_EMAIL: str = "admin@simeonshop.rs"
+    ADMIN_EMAIL: str = "admin@cvecarairig.rs"
     ALLOW_PUBLIC_REGISTRATION: bool = False
     BOOTSTRAP_ADMIN_TOKEN: str | None = None
 
@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     SMTP_USERNAME: str | None = None
     SMTP_PASSWORD: str | None = None
     SMTP_FROM_EMAIL: str | None = None
-    SMTP_FROM_NAME: str = "Simeon Shop"
+    SMTP_FROM_NAME: str = "Cvećara Irig"
 
     RATE_LIMIT_DEFAULT: str = "120/minute"
     RATE_LIMIT_AUTH: str = "10/minute"

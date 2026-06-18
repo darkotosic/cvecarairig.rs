@@ -1,6 +1,6 @@
-# Deployment Guide - SimeonShop.rs
+# Deployment Guide - cvecarairig.rs
 
-Production deployment guide for the SimeonShop.rs storefront, admin dashboard, FastAPI API, and PostgreSQL database.
+Production deployment guide for the cvecarairig.rs storefront, admin dashboard, FastAPI API, and PostgreSQL database.
 
 ## Pre-deployment checklist
 
@@ -14,7 +14,7 @@ Production deployment guide for the SimeonShop.rs storefront, admin dashboard, F
 
 ## Frontend deployment: Netlify
 
-Netlify is the primary frontend target for `simeonshop.rs`.
+Netlify is the primary frontend target for `cvecarairig.rs`.
 
 ### Build configuration
 
@@ -28,8 +28,8 @@ publish = ".next"
 
 [build.environment]
 NODE_VERSION = "22"
-NEXT_PUBLIC_SITE_URL = "https://simeonshop.rs"
-NEXT_PUBLIC_BRAND_NAME = "Simeon Shop"
+NEXT_PUBLIC_SITE_URL = "https://cvecarairig.rs"
+NEXT_PUBLIC_BRAND_NAME = "Cvećara Irig"
 NEXT_PUBLIC_DEFAULT_LOCALE = "sr"
 
 [[plugins]]
@@ -45,9 +45,9 @@ Configure these in Netlify Site settings. Do not hardcode the Render URL in `net
 ```env
 API_BASE_URL=https://tvoj-render-backend.onrender.com
 NEXT_PUBLIC_API_BASE_URL=https://tvoj-render-backend.onrender.com
-NEXT_PUBLIC_SITE_URL=https://simeonshop.rs
-ADMIN_ALLOWED_ORIGINS=https://simeonshop.rs,https://www.simeonshop.rs
-NEXT_PUBLIC_BRAND_NAME=Simeon Shop
+NEXT_PUBLIC_SITE_URL=https://cvecarairig.rs
+ADMIN_ALLOWED_ORIGINS=https://cvecarairig.rs,https://www.cvecarairig.rs
+NEXT_PUBLIC_BRAND_NAME=Cvećara Irig
 NEXT_PUBLIC_DEFAULT_LOCALE=sr
 NEXT_PUBLIC_INSTAGRAM_URL=
 NEXT_PUBLIC_FACEBOOK_URL=
@@ -106,18 +106,18 @@ alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy
 
 ```env
 APP_ENV=production
-APP_NAME=SimeonShop API
+APP_NAME=CvecaraIrig API
 PROJECT_VERSION=0.3.0
 API_PREFIX=/api/v1
 HOST=0.0.0.0
 PORT=8000
-ALLOWED_ORIGINS=https://simeonshop.rs,https://www.simeonshop.rs
-FRONTEND_URL=https://simeonshop.rs
+ALLOWED_ORIGINS=https://cvecarairig.rs,https://www.cvecarairig.rs
+FRONTEND_URL=https://cvecarairig.rs
 DATABASE_URL=postgresql://...
 JWT_SECRET=dug-random-secret-minimum-32-karaktera
 JWT_ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=480
-ADMIN_EMAIL=admin@simeonshop.rs
+ADMIN_EMAIL=admin@cvecarairig.rs
 ALLOW_PUBLIC_REGISTRATION=false
 BOOTSTRAP_ADMIN_TOKEN=privremeno-samo-za-prvo-kreiranje-admina
 RATE_LIMIT_DEFAULT=120/minute
@@ -129,7 +129,7 @@ SMTP_PORT=587
 SMTP_USERNAME=
 SMTP_PASSWORD=
 SMTP_FROM_EMAIL=
-SMTP_FROM_NAME=Simeon Shop
+SMTP_FROM_NAME=Cvećara Irig
 MEDIA_PROVIDER=cloudinary
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
@@ -160,8 +160,8 @@ The compose stack uses:
 ### HTTPS and domains
 
 - Enable HTTPS for Netlify and Render.
-- Redirect all public traffic to `https://simeonshop.rs`.
-- Include both `https://simeonshop.rs` and `https://www.simeonshop.rs` in backend CORS only if both domains are active.
+- Redirect all public traffic to `https://cvecarairig.rs`.
+- Include both `https://cvecarairig.rs` and `https://www.cvecarairig.rs` in backend CORS only if both domains are active.
 
 ### Secrets
 

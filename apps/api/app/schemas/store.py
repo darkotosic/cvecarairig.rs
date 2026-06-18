@@ -33,3 +33,9 @@ class PublicStoreSettingsRead(BaseModel):
     company_registration_number: str | None = None
     company_tax_id: str | None = None
     logo_url: str | None = None
+    business_hours: str | None = None
+    service_area: str | None = None
+    same_day_cutoff: str | None = None
+    payment_methods: str | None = None
+    google_maps_url: str | None = None
+    whatsapp_url: str | None = None

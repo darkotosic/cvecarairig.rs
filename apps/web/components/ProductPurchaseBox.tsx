@@ -27,16 +27,16 @@ export function ProductPurchaseBox({ product }: { product: Product }) {
       </div>
       {requiresVariant && (
         <label className="block font-medium">
-          Veličina / boja
+          Dimenzija aranžmana aranžmana / paleta
           <select value={variantId} onChange={(event) => setVariantId(event.target.value ? Number(event.target.value) : '')} className="mt-2 w-full border border-slate-300 px-3 py-3">
-            <option value="">Izaberite veličinu/boju</option>
+            <option value="">Izaberite dimenziju aranžmana / paletu</option>
             {activeVariants.map((variant) => <option key={variant.id} value={variant.id}>{variantLabel(variant)} · {variant.price_cents ? `${(variant.price_cents / 100).toLocaleString('sr-RS')} ${product.currency}` : 'standardna cena'} · {variant.stock_quantity > 0 ? `${variant.stock_quantity} kom.` : 'Nema na stanju'}</option>)}
           </select>
         </label>
       )}
-      {requiresVariant && !selectedVariant && <p className="rounded-lg bg-amber-50 p-3 text-amber-800">Izaberite varijantu za dostupnost. Za ovaj proizvod zaliha zavisi od izabrane veličine/boje.</p>}
+      {requiresVariant && !selectedVariant && <p className="rounded-lg bg-amber-50 p-3 text-amber-800">Izaberite dimenziju aranžmana za dostupnost. Za ovaj proizvod zaliha zavisi od izabrane dimenzije aranžmana/palete.</p>}
       {selectedOutOfStock && <p className="rounded-lg bg-red-50 p-3 font-medium text-red-700">Izabrana varijanta nema na stanju.</p>}
-      <p>Stanje: {stock === undefined ? 'Izaberite varijantu za dostupnost' : stock > 0 ? `${stock} komada dostupno` : 'Nema na stanju'}</p>
+      <p>Stanje: {stock === undefined ? 'Izaberite dimenziju aranžmana za dostupnost' : stock > 0 ? `${stock} komada dostupno` : 'Nema na stanju'}</p>
       {sku && <p>SKU: {sku}</p>}
       <AddToCartButton product={product} selectedVariant={selectedVariant} requiresVariant={requiresVariant} />
     </div>

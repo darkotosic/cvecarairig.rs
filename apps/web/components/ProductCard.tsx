@@ -35,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
         {hasDiscount && <span className="absolute right-3 top-3 rounded-full bg-gold px-3 py-1 text-xs font-semibold text-primary">Sniženo</span>}
       </Link>
       <div className="flex flex-1 flex-col p-5">
-        <p className="text-sm text-slate-500">{product.category?.name ?? product.sku ?? 'Simeon Shop'}</p>
+        <p className="text-sm text-slate-500">{product.category?.name ?? product.sku ?? 'Cvećara Irig'}</p>
         <Link href={`/products/${product.slug}`} className="mt-1 text-lg font-semibold text-primary hover:underline">{product.name}</Link>
         {product.short_description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{product.short_description}</p>}
         <div className="mt-3 flex flex-wrap items-baseline gap-2">
@@ -47,9 +47,9 @@ export function ProductCard({ product }: { product: Product }) {
             </p>
           )}
         </div>
-        {hasVariants && <p className="mt-2 text-xs font-medium text-slate-500">Dostupne varijante - izaberite veličinu/boju na detalju.</p>}
+        {hasVariants && <p className="mt-2 text-xs font-medium text-slate-500">Dostupne varijante - izaberite dimenziju aranžmana / paletu na detalju.</p>}
         <div className="mt-auto pt-4">
-          {hasVariants ? <Link href={`/products/${product.slug}`} className="block w-full bg-primary px-4 py-3 text-center text-sm font-semibold text-white">Izaberi varijantu</Link> : <AddToCartButton product={product} />}
+          {hasVariants ? <Link href={`/products/${product.slug}`} className="block w-full bg-primary px-4 py-3 text-center text-sm font-semibold text-white">Izaberi dimenziju aranžmana</Link> : <AddToCartButton product={product} />}
         </div>
       </div>
     </article>

@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 os.environ.setdefault("APP_ENV", "test")
-os.environ.setdefault("DATABASE_URL", f"sqlite:///{tempfile.gettempdir()}/simeonshop_test.db")
+os.environ.setdefault("DATABASE_URL", f"sqlite:///{tempfile.gettempdir()}/cvecarairig_test.db")
 os.environ.setdefault("JWT_SECRET", "test-secret-not-for-production")
 os.environ.setdefault("BOOTSTRAP_ADMIN_TOKEN", "test-bootstrap-token")
 os.environ.setdefault("ALLOW_PUBLIC_REGISTRATION", "false")

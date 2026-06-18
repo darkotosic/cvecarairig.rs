@@ -1,4 +1,4 @@
-# SimeonShop.rs
+# cvecarairig.rs
 
 Pre-production e-commerce foundation for selling clothing through Instagram/Facebook channels with a decoupled storefront, protected admin dashboard, FastAPI backend, PostgreSQL database, order lifecycle controls, checkout validation, and Cloudinary-ready product media.
 

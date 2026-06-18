@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
   const data = await response.json() as { access_token?: string; token_type?: string };
   if (!data.access_token) return NextResponse.json({ detail: 'Backend did not return an access token.' }, { status: 502 });
 
-  (await cookies()).set('simeonshop_admin_token', data.access_token, {
+  (await cookies()).set('cvecarairig_admin_token', data.access_token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',

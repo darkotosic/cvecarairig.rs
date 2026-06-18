@@ -21,8 +21,8 @@ def _product(db):
     return create_product(
         db,
         ProductCreate(
-            name="Validacioni proizvod",
-            slug="validacioni-proizvod",
+            name="Validacioni buket",
+            slug="validacioni-buket",
             price_cents=250000,
             stock_quantity=5,
         ),
@@ -86,3 +86,17 @@ def test_guest_checkout_still_creates_order_with_valid_data(client, db):
     data = response.json()
     assert data["total_cents"] == 250000
     assert data["accepted_terms_at"] is not None
+
+
+def test_guest_checkout_rejects_past_delivery_date(client, db):
+    product = _product(db)
+    response = client.post("/api/v1/orders/guest-checkout", json=_payload(product.id, delivery_date="2020-01-01"))
+    assert response.status_code == 422
+    assert "delivery_date" in response.text
+
+
+def test_guest_checkout_rejects_long_card_message(client, db):
+    product = _product(db)
+    response = client.post("/api/v1/orders/guest-checkout", json=_payload(product.id, card_message="x" * 501))
+    assert response.status_code == 422
+    assert "card_message" in response.text

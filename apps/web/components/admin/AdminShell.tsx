@@ -40,8 +40,8 @@ export function AdminShell({
       }
     }
 
-    window.addEventListener('simeonshop:admin-auth-expired', handleExpired);
-    return () => window.removeEventListener('simeonshop:admin-auth-expired', handleExpired);
+    window.addEventListener('cvecarairig:admin-auth-expired', handleExpired);
+    return () => window.removeEventListener('cvecarairig:admin-auth-expired', handleExpired);
   }, [router]);
 
   async function logout() {

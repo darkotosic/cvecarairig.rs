@@ -17,6 +17,12 @@ PUBLIC_STORE_SETTING_KEYS = {
     "company_registration_number",
     "company_tax_id",
     "logo_url",
+    "business_hours",
+    "service_area",
+    "same_day_cutoff",
+    "payment_methods",
+    "google_maps_url",
+    "whatsapp_url",
 }
 
 

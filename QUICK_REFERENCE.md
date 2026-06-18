@@ -1,4 +1,4 @@
-# Quick Reference - SimeonShop.rs
+# Quick Reference - cvecarairig.rs
 
 Brz pregled komandi i važnih informacija.
 
@@ -49,7 +49,7 @@ docker-compose logs -f         # Prati logove
 ## 📁 Key Directories
 
 ```
-simeonshop/
+cvecarairig/
 ├── apps/web/                  # Frontend (Next.js)
 │   ├── pages/                # React stranice
 │   ├── components/           # React komponente

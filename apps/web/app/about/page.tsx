@@ -5,18 +5,16 @@ import { loadPublicStoreSettings } from '@/lib/store-settings';
 export const metadata: Metadata = {
   title: 'O nama',
   alternates: { canonical: '/about' },
-  description: 'Informacije o prodavcu, kontaktima i načinu rada online prodavnice.',
+  description: 'Informacije o Cvećari Irig, kontaktima i načinu poručivanja cveća.',
 };
 
 export default async function AboutPage() {
   const settings = await loadPublicStoreSettings();
-  const sellerName = settings.company_name ?? 'Online prodavnica';
-
   return (
     <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <SectionHeader
         title="O nama"
-        description={`${sellerName} koristi ovaj sajt za online prodaju proizvoda, jasnu komunikaciju sa kupcima i bezbedno čuvanje podataka o porudžbinama.`}
+        description="Cvećara Irig je lokalna cvećara fokusirana na sveže bukete, ruže, flower box aranžmane, poklone i aranžmane za posebne prilike."
       />
       <section className="mt-8 rounded-3xl bg-slate-50 p-6 text-slate-700">
         <h2 className="text-2xl font-semibold text-slate-900">Podaci o prodavcu</h2>

@@ -49,7 +49,7 @@ app.include_router(v1_router)
 @app.get("/")
 def root():
     return {
-        "message": "Welcome to SimeonShop.rs API",
+        "message": "Welcome to cvecarairig.rs API",
         "docs": "/api/docs",
         "version": settings.PROJECT_VERSION,
     }

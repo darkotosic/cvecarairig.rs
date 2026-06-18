@@ -49,8 +49,8 @@ export function CartView() {
   const refresh = () => setLines(getCart());
 
   useEffect(() => {
-    window.addEventListener('simeonshop:cart', refresh);
-    return () => window.removeEventListener('simeonshop:cart', refresh);
+    window.addEventListener('cvecarairig:cart', refresh);
+    return () => window.removeEventListener('cvecarairig:cart', refresh);
   }, []);
 
   const total = lines.reduce((sum, line) => sum + line.unitPriceCents * line.quantity, 0);

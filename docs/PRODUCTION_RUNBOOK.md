@@ -1,8 +1,8 @@
-# SimeonShop.rs Production Runbook
+# cvecarairig.rs Production Runbook
 
 ## Architecture
 
-- **Frontend:** Next.js App Router deployed on Netlify for `https://simeonshop.rs`.
+- **Frontend:** Next.js App Router deployed on Netlify for `https://cvecarairig.rs`.
 - **Backend:** FastAPI deployed on Render.com.
 - **Database:** Render PostgreSQL managed database.
 - **Media:** Cloudinary for product image uploads.
@@ -20,7 +20,7 @@ Koristi se samo za budući authenticated cart system.
 
 ## Verify frontend
 
-1. Open `https://simeonshop.rs` and confirm homepage renders.
+1. Open `https://cvecarairig.rs` and confirm homepage renders.
 2. Open `/products`, one product detail page, `/cart`, `/checkout`, and legal pages.
 3. Confirm Netlify build used `npm run build` from `apps/web`.
 4. Confirm the public footer does not link to `/admin/login`.
@@ -35,7 +35,7 @@ Expected: JSON with `status: "ok"` and `database: "ok"`.
 
 ## Verify CORS
 
-- `ALLOWED_ORIGINS` must include `https://simeonshop.rs`.
+- `ALLOWED_ORIGINS` must include `https://cvecarairig.rs`.
 - Browser requests from the storefront to backend should not show CORS errors.
 
 ## Verify environment variables
@@ -56,8 +56,8 @@ Frontend required:
 
 - `API_BASE_URL`
 - `NEXT_PUBLIC_API_BASE_URL`
-- `NEXT_PUBLIC_SITE_URL=https://simeonshop.rs`
-- `ADMIN_ALLOWED_ORIGINS=https://simeonshop.rs,https://www.simeonshop.rs`
+- `NEXT_PUBLIC_SITE_URL=https://cvecarairig.rs`
+- `ADMIN_ALLOWED_ORIGINS=https://cvecarairig.rs,https://www.cvecarairig.rs`
 
 ## Run migrations
 
@@ -95,7 +95,7 @@ Admin API calls from the Next.js application go through `/api/admin/proxy/...` s
 Proveriti:
 
 - `NEXT_PUBLIC_SITE_URL` tačno pokazuje na produkcioni domen.
-- `ADMIN_ALLOWED_ORIGINS` uključuje `https://simeonshop.rs` i `https://www.simeonshop.rs` ako se koristi www domen.
+- `ADMIN_ALLOWED_ORIGINS` uključuje `https://cvecarairig.rs` i `https://www.cvecarairig.rs` ako se koristi www domen.
 - www i non-www domen rade bez lažnih `403` grešaka za admin mutation requestove.
 - Admin create product radi.
 - Admin upload image radi preko proxy-ja.
