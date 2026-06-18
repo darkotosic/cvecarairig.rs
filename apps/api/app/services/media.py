@@ -61,7 +61,7 @@ async def upload_product_image(file: UploadFile, product_id: int) -> UploadedPro
     )
     result = cloudinary.uploader.upload(
         content,
-        folder=f"simeonshop/products/{product_id}",
+        folder=f"cvecarairig/products/{product_id}",
         resource_type="image",
         overwrite=False,
     )

@@ -1,9 +1,9 @@
-# SimeonShop.rs Makefile - Build & Development Commands
+# cvecarairig.rs Makefile - Build & Development Commands
 
 .PHONY: help install frontend-install backend-install dev frontend-dev backend-dev build frontend-build backend-build clean
 
 help:
-	@echo "SimeonShop.rs - Available Commands"
+	@echo "cvecarairig.rs - Available Commands"
 	@echo "===================================="
 	@echo ""
 	@echo "Installation:"
@@ -41,7 +41,7 @@ backend-install:
 
 # Development targets
 dev:
-	@echo "🚀 Starting SimeonShop.rs (Frontend & Backend)..."
+	@echo "🚀 Starting cvecarairig.rs (Frontend & Backend)..."
 	@echo "Frontend will run on: http://localhost:3000"
 	@echo "Backend will run on:  http://localhost:8000"
 	@echo "API Docs at:          http://localhost:8000/api/docs"

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 import re
 
 from typing import Literal
@@ -16,10 +16,18 @@ class CheckoutCreate(BaseModel):
     shipping_address: str = Field(min_length=5, max_length=500)
     accepted_terms: Literal[True]
     note: str | None = None
+    recipient_name: str | None = Field(default=None, max_length=255)
+    recipient_phone: str | None = Field(default=None, max_length=80)
+    delivery_date: date | None = None
+    delivery_time_window: str | None = Field(default=None, max_length=120)
+    card_message: str | None = Field(default=None, max_length=500)
+    occasion: str | None = Field(default=None, max_length=120)
 
-    @field_validator("customer_phone")
+    @field_validator("customer_phone", "recipient_phone")
     @classmethod
-    def validate_phone(cls, value: str) -> str:
+    def validate_phone(cls, value: str | None) -> str | None:
+        if value is None or value == "":
+            return None
         normalized = value.strip()
         if not re.fullmatch(r"[0-9+/\-\s]{6,80}", normalized):
             raise PydanticCustomError("phone_invalid_characters", "Phone number contains invalid characters.")
@@ -27,6 +35,14 @@ class CheckoutCreate(BaseModel):
         if len(digits) < 6:
             raise PydanticCustomError("phone_too_short", "Phone number is too short.")
         return normalized
+
+
+    @field_validator("delivery_date")
+    @classmethod
+    def validate_delivery_date(cls, value: date | None) -> date | None:
+        if value is not None and value < date.today():
+            raise PydanticCustomError("delivery_date_past", "Delivery date cannot be in the past.")
+        return value
 
     @field_validator("shipping_postal_code")
     @classmethod
@@ -103,6 +119,12 @@ class OrderRead(BaseModel):
     shipping_postal_code: str
     shipping_address: str
     note: str | None
+    recipient_name: str | None = None
+    recipient_phone: str | None = None
+    delivery_date: date | None = None
+    delivery_time_window: str | None = None
+    card_message: str | None = None
+    occasion: str | None = None
     idempotency_key: str | None = None
     confirmed_at: datetime | None = None
     packed_at: datetime | None = None

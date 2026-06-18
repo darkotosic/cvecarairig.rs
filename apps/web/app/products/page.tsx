@@ -5,7 +5,7 @@ import { ProductFilters } from '@/components/ProductFilters';
 import { ProductGrid } from '@/components/ProductGrid';
 import { getCategories, getProducts, type Category, type ProductListResponse } from '@/lib/api';
 
-export const metadata: Metadata = { title: 'Proizvodi', description: 'Pregled Simeon Shop proizvoda sa filterima, kategorijama i sortiranjem.' };
+export const metadata: Metadata = { title: 'Aranžmani', description: 'Pregled Cvećara Irig aranžmana sa filterima, kategorijama i sortiranjem.' };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
@@ -67,7 +67,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
   if (!catalog) {
     return (
       <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="Shop" title="Proizvodi" description="Katalog trenutno nije dostupan. Pokušajte kasnije." />
+        <SectionHeader eyebrow="Cvećara" title="Aranžmani" description="Katalog trenutno nije dostupan. Pokušajte kasnije." />
         <div className="mt-8 border border-amber-200 bg-amber-50 p-6 text-amber-900">Katalog trenutno nije dostupan. Pokušajte kasnije.</div>
       </main>
     );
@@ -79,14 +79,14 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <SectionHeader eyebrow="Shop" title="Proizvodi" description="Katalog garderobe dostupan za poručivanje preko web sajta, Instagrama i Facebook kanala." />
+      <SectionHeader eyebrow="Cvećara" title="Aranžmani" description="Katalog svežih buketa, ruža, flower box aranžmana i poklon aranžmana za lokalnu dostavu." />
       <div className="mt-8 grid gap-6 lg:grid-cols-[280px_1fr]">
         <ProductFilters categories={catalog.categories} searchParams={uiParams} />
         <div>
           <ProductGrid products={catalog.products.items} />
           {catalog.products.items.length === 0 && (
             <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 text-sm text-slate-700">
-              <p className="text-lg font-semibold text-primary">Nema proizvoda za izabrane filtere.</p>
+              <p className="text-lg font-semibold text-primary">Nema aranžmana za izabrane filtere.</p>
               <p className="mt-2 text-slate-600">Probajte širi raspon RSD cena, uklonite kategoriju ili pogledajte celu kolekciju.</p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link href="/products" className="border border-primary px-4 py-2 font-semibold text-primary">Resetuj filtere</Link>
@@ -95,7 +95,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
             </div>
           )}
           {pages > 1 && (
-            <nav className="mt-6 flex flex-wrap items-center gap-3 text-sm text-slate-600" aria-label="Paginacija proizvoda">
+            <nav className="mt-6 flex flex-wrap items-center gap-3 text-sm text-slate-600" aria-label="Paginacija aranžmana">
               <Link
                 href={createPageHref(uiParams, page - 1)}
                 aria-disabled={!hasPrevious}

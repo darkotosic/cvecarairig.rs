@@ -5,7 +5,7 @@ import { ProductPurchaseBox } from '@/components/ProductPurchaseBox';
 import { ApiError, getProduct } from '@/lib/api';
 import { loadPublicStoreSettings } from '@/lib/store-settings';
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://simeonshop.rs').replace(/\/$/, '');
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
 const fallbackLogoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
 function absoluteUrl(url?: string | null): string | undefined {
@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const fallbackImage = absoluteUrl(settings.logo_url) ?? absoluteUrl(fallbackLogoUrl);
     const image = primaryImage ?? fallbackImage;
     return {
-      title: product.seo_title ?? product.name,
-      description: product.seo_description ?? product.short_description ?? product.description ?? undefined,
+      title: product.seo_title ?? `${product.name} | Cvećara Irig`,
+      description: product.seo_description ?? product.short_description ?? product.description ?? `Poručite ${product.name} u Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
       alternates: { canonical: `/products/${product.slug}` },
       openGraph: {
         title: product.name,
         description: product.short_description ?? product.description ?? undefined,
         url: `${siteUrl}/products/${product.slug}`,
-        images: image ? [{ url: image, alt: primaryImage ? product.name : `${settings.company_name ?? 'Simeon Shop'} logo` }] : undefined,
+        images: image ? [{ url: image, alt: primaryImage ? product.name : `${settings.company_name ?? 'Cvećara Irig'} logo` }] : undefined,
       },
     };
   } catch {
@@ -87,20 +87,20 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <p className="mt-2 text-sm text-slate-600">Plaćanje pouzećem. Potvrđujemo porudžbinu pre slanja.</p>
           </article>
           <article className="rounded-3xl bg-slate-50 p-5">
-            <h2 className="font-bold text-primary">Povraćaj i zamena</h2>
-            <p className="mt-2 text-sm text-slate-600">Zamena veličine i povraćaj su dostupni za nekorišćene proizvode u originalnom stanju.</p>
+            <h2 className="font-bold text-primary">Reklamacije</h2>
+            <p className="mt-2 text-sm text-slate-600">Sveži aranžmani su kvarljiva roba; reklamacije rešavamo individualno odmah po prijemu.</p>
           </article>
           <article className="rounded-3xl bg-slate-50 p-5">
-            <h2 className="font-bold text-primary">Vodič za veličine</h2>
-            <p className="mt-2 text-sm text-slate-600">Ako ste između dve veličine, kontaktirajte nas pre poručivanja.</p>
+            <h2 className="font-bold text-primary">Nega cveća</h2>
+            <p className="mt-2 text-sm text-slate-600">Preporučujemo svežu vodu, hladnije mesto bez direktnog sunca i uklanjanje uvelih listova.</p>
           </article>
           <article className="rounded-3xl bg-slate-50 p-5">
-            <h2 className="font-bold text-primary">Materijal</h2>
-            <p className="mt-2 text-sm text-slate-600">{product.material ?? 'Detalji o materijalu dostupni su na zahtev.'}</p>
+            <h2 className="font-bold text-primary">Sastav aranžmana</h2>
+            <p className="mt-2 text-sm text-slate-600">{product.material ?? 'Detalji o sastavu aranžmana dostupni su na zahtev.'}</p>
           </article>
           <article className="rounded-3xl bg-slate-50 p-5 sm:col-span-2">
-            <h2 className="font-bold text-primary">Održavanje</h2>
-            <p className="mt-2 text-sm text-slate-600">{product.care_instructions ?? 'Pratite oznaku na proizvodu i perite sa sličnim bojama.'}</p>
+            <h2 className="font-bold text-primary">Instrukcije za negu</h2>
+            <p className="mt-2 text-sm text-slate-600">{product.care_instructions ?? 'Držite cveće u svežoj vodi, na hladnijem mestu i van direktnog sunca.'}</p>
           </article>
         </div>
       </section>

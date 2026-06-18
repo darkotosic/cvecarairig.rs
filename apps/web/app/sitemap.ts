@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import type { Product, ProductListResponse } from '@/lib/api';
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://simeonshop.rs').replace(/\/$/, '');
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
 const apiBaseUrl = (process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL)?.replace(/\/$/, '');
 const sitemapFetchTimeoutMs = 5000;
 const maxProductPages = 50;
@@ -13,7 +13,7 @@ const staticPaths = [
   '/contact',
   '/shipping',
   '/returns',
-  '/size-guide',
+  '/flower-care',
   '/privacy-policy',
   '/terms-and-conditions',
 ];

@@ -14,6 +14,12 @@ export const fallbackStoreSettings = (): PublicStoreSettings => ({
   company_registration_number: optionalEnv(process.env.NEXT_PUBLIC_COMPANY_REGISTRATION_NUMBER),
   company_tax_id: optionalEnv(process.env.NEXT_PUBLIC_COMPANY_TAX_ID),
   logo_url: optionalEnv(process.env.NEXT_PUBLIC_LOGO_URL),
+  business_hours: optionalEnv(process.env.NEXT_PUBLIC_BUSINESS_HOURS),
+  service_area: optionalEnv(process.env.NEXT_PUBLIC_SERVICE_AREA),
+  same_day_cutoff: optionalEnv(process.env.NEXT_PUBLIC_SAME_DAY_CUTOFF),
+  payment_methods: optionalEnv(process.env.NEXT_PUBLIC_PAYMENT_METHODS),
+  google_maps_url: optionalEnv(process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL),
+  whatsapp_url: optionalEnv(process.env.NEXT_PUBLIC_WHATSAPP_URL),
 });
 
 export async function loadPublicStoreSettings(): Promise<PublicStoreSettings> {

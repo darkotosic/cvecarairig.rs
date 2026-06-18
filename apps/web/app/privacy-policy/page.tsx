@@ -27,7 +27,7 @@ export default async function PrivacyPolicyPage() {
       </section>
       <section className="mt-8 space-y-3">
         <h2 className="text-2xl font-semibold text-slate-900">Koje podatke obrađujemo</h2>
-        <p>Podaci za porudžbinu mogu uključivati ime i prezime, telefon, email ako je unet, adresu za dostavu, grad, poštanski broj, sadržaj porudžbine i napomenu kupca.</p>
+        <p>Podaci za porudžbinu mogu uključivati podatke kupca, podatke primaoca ako je dostava poklon, adresu dostave, telefon za potvrdu, email ako je unet, grad, poštanski broj, sadržaj porudžbine, napomenu kupca i poruku za karticu ako je uneta.</p>
         <p>Sistem može čuvati IP adresu, user-agent, vreme prihvatanja uslova i tehničke identifikatore porudžbine radi bezbednosti, dokazivanja poručivanja i sprečavanja dupliranja porudžbina.</p>
       </section>
       <section className="mt-8 space-y-3">

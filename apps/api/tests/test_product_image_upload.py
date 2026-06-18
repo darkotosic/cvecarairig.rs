@@ -46,7 +46,7 @@ def test_admin_uploads_product_image_to_cloudinary(client, db, monkeypatch):
 
     def fake_upload(content, folder, resource_type, overwrite):
         assert content == b"image-bytes"
-        assert folder == f"simeonshop/products/{product.id}"
+        assert folder == f"cvecarairig/products/{product.id}"
         assert resource_type == "image"
         assert overwrite is False
         return {"secure_url": "https://res.cloudinary.com/demo/image/upload/test.jpg"}

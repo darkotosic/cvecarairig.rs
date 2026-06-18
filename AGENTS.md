@@ -1,8 +1,8 @@
-# AGENTS.md - SimeonShop.rs
+# AGENTS.md - cvecarairig.rs
 
 ## Mission
 
-Build a production-ready e-commerce platform for `simeonshop.rs`.
+Build a production-ready florist e-commerce platform for `cvecarairig.rs`.
 
 The system consists of:
 
@@ -85,7 +85,7 @@ Create models for:
 Frontend:
 
 - Netlify
-- domain: `simeonshop.rs`
+- domain: `cvecarairig.rs`
 
 Backend:
 
@@ -118,6 +118,7 @@ If tests are not implemented yet, add minimal smoke tests for API health and cor
 - Do not break mobile layout.
 - Do not remove existing working functionality without reason.
 - Do not use fake static fallback data as final production source of truth.
+- Do not use clothing-specific copy, size-guide copy, or apparel terminology. This project is a florist website.
 
 ## Completion Format
 

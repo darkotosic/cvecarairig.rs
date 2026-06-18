@@ -1,8 +1,8 @@
-# Project Summary - SimeonShop.rs
+# Project Summary - cvecarairig.rs
 
 ## 🎯 Project Overview
 
-**SimeonShop.rs** je enterprise-ready e-commerce monorepo platforma sa modernom Next.js frontend aplikacijom i FastAPI backend servisom.
+**cvecarairig.rs** je enterprise-ready e-commerce monorepo platforma sa modernom Next.js frontend aplikacijom i FastAPI backend servisom.
 
 ## 📦 What's Included
 

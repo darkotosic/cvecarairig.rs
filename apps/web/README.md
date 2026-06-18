@@ -1,6 +1,6 @@
-# Frontend - SimeonShop.rs Web Application
+# Frontend - cvecarairig.rs Web Application
 
-Next.js App Router storefront and protected admin dashboard for SimeonShop.rs. Current status: pre-production e-commerce foundation wired to backend API contracts, canonical guest checkout, protected admin proxy, SEO metadata, sitemap, robots, and Cloudinary image allow-listing.
+Next.js App Router storefront and protected admin dashboard for cvecarairig.rs. Current status: pre-production e-commerce foundation wired to backend API contracts, canonical guest checkout, protected admin proxy, SEO metadata, sitemap, robots, and Cloudinary image allow-listing.
 
 ## 🚀 Quick Start
 
@@ -30,7 +30,7 @@ web/
 │   ├── contact/               # Contact page
 │   ├── shipping/              # Shipping page
 │   ├── returns/               # Returns page
-│   ├── size-guide/            # Size guide page
+│   ├── flower-care/            # Flower care page
 │   ├── privacy-policy/        # Privacy policy
 │   ├── terms-and-conditions/  # Terms
 │   └── admin/
@@ -69,7 +69,7 @@ Using **Tailwind CSS** for utility-first styling:
 API_BASE_URL=http://localhost:8000
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_BRAND_NAME=Simeon Shop
+NEXT_PUBLIC_BRAND_NAME=Cvećara Irig
 NEXT_PUBLIC_DEFAULT_LOCALE=sr
 NEXT_PUBLIC_INSTAGRAM_URL=
 NEXT_PUBLIC_FACEBOOK_URL=

@@ -44,14 +44,14 @@ export type ProductVariant = { id: number; sku?: string | null; size?: string | 
 export type Product = {
   id: number; name: string; slug: string; sku?: string | null; description?: string | null; category_id?: number | null; category?: Category | null;
   short_description?: string | null; price_cents: number; compare_at_price_cents?: number | null; currency: string; image_url?: string | null;
-  stock_quantity: number; sort_order: number; effective_stock_quantity?: number; material?: string | null; care_instructions?: string | null; seo_title?: string | null; seo_description?: string | null;
+  stock_quantity: number; sort_order: number; effective_stock_quantity?: number; material?: string | null; care_instructions?: string | null; arrangement_type?: string | null; occasion?: string | null; color_palette?: string | null; flower_count?: number | null; is_same_day_delivery?: boolean; lead_time_hours?: number; seo_title?: string | null; seo_description?: string | null;
   is_active: boolean; images: ProductImage[]; variants: ProductVariant[]; created_at: string; updated_at: string;
 };
 export type ProductListResponse = { items: Product[]; total: number; page: number; page_size: number; pages: number };
 export type CartLine = { lineId: string; productId: number; variantId?: number; name: string; slug: string; imageUrl?: string | null; sku?: string | null; variantLabel?: string; unitPriceCents: number; quantity: number; stockQuantity: number; currency: string };
-export type GuestCheckoutPayload = { customer_name: string; customer_email?: string; customer_phone: string; shipping_city: string; shipping_postal_code: string; shipping_address: string; note?: string; accepted_terms: boolean; source?: string; idempotency_key?: string; items: { product_id: number; variant_id?: number; quantity: number }[] };
+export type GuestCheckoutPayload = { customer_name: string; customer_email?: string; customer_phone: string; shipping_city: string; shipping_postal_code: string; shipping_address: string; note?: string; recipient_name?: string; recipient_phone?: string; delivery_date?: string; delivery_time_window?: string; card_message?: string; occasion?: string; accepted_terms: boolean; source?: string; idempotency_key?: string; items: { product_id: number; variant_id?: number; quantity: number }[] };
 export type OrderStatusEvent = { id: number; old_status?: string | null; new_status: string; actor_user_id?: number | null; note?: string | null; created_at: string };
-export type Order = { id: number; order_number: string; status: string; total_cents: number; currency: string; customer_name: string; customer_email?: string | null; customer_phone: string; shipping_city: string; shipping_postal_code: string; shipping_address: string; note?: string | null; idempotency_key?: string | null; confirmed_at?: string | null; packed_at?: string | null; shipped_at?: string | null; delivered_at?: string | null; cancelled_at?: string | null; internal_note?: string | null; accepted_terms_at?: string | null; customer_ip?: string | null; user_agent?: string | null; source?: string | null; created_at: string; updated_at?: string; status_events?: OrderStatusEvent[]; items: { id: number; product_name: string; product_sku?: string | null; product_id?: number | null; unit_price_cents?: number; quantity: number; total_price_cents: number; variant_id?: number | null; product_slug?: string | null; product_image_url?: string | null; variant_label?: string | null; currency?: string; discount_cents?: number; tax_cents?: number }[] };
+export type Order = { id: number; order_number: string; status: string; total_cents: number; currency: string; customer_name: string; customer_email?: string | null; customer_phone: string; shipping_city: string; shipping_postal_code: string; shipping_address: string; note?: string | null; recipient_name?: string | null; recipient_phone?: string | null; delivery_date?: string | null; delivery_time_window?: string | null; card_message?: string | null; occasion?: string | null; idempotency_key?: string | null; confirmed_at?: string | null; packed_at?: string | null; shipped_at?: string | null; delivered_at?: string | null; cancelled_at?: string | null; internal_note?: string | null; accepted_terms_at?: string | null; customer_ip?: string | null; user_agent?: string | null; source?: string | null; created_at: string; updated_at?: string; status_events?: OrderStatusEvent[]; items: { id: number; product_name: string; product_sku?: string | null; product_id?: number | null; unit_price_cents?: number; quantity: number; total_price_cents: number; variant_id?: number | null; product_slug?: string | null; product_image_url?: string | null; variant_label?: string | null; currency?: string; discount_cents?: number; tax_cents?: number }[] };
 
 export type PublicStoreSettings = {
   store_phone?: string | null;
@@ -65,6 +65,12 @@ export type PublicStoreSettings = {
   company_registration_number?: string | null;
   company_tax_id?: string | null;
   logo_url?: string | null;
+  business_hours?: string | null;
+  service_area?: string | null;
+  same_day_cutoff?: string | null;
+  payment_methods?: string | null;
+  google_maps_url?: string | null;
+  whatsapp_url?: string | null;
 };
 
 export type LowStockProduct = { id: number; name: string; slug: string; sku?: string | null; stock_quantity: number; variant_stock_quantity: number; effective_stock_quantity: number };
@@ -109,7 +115,7 @@ export async function adminFetch<T>(path: string, init: AdminFetchOptions = {}):
     }
 
     if ((response.status === 401 || response.status === 403) && typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('simeonshop:admin-auth-expired'));
+      window.dispatchEvent(new CustomEvent('cvecarairig:admin-auth-expired'));
     }
 
     throw new ApiError(`Admin request failed with status ${response.status}`, response.status, details);
@@ -140,7 +146,7 @@ export async function exportAdminOrdersCsv(params: Record<string, string | numbe
       details = await response.text();
     }
     if ((response.status === 401 || response.status === 403) && typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('simeonshop:admin-auth-expired'));
+      window.dispatchEvent(new CustomEvent('cvecarairig:admin-auth-expired'));
     }
     throw new ApiError(`Admin CSV export failed with status ${response.status}`, response.status, details);
   }

@@ -20,7 +20,7 @@ export function AddToCartButton({ product, selectedVariant, requiresVariant = fa
         }}
         className="w-full bg-primary px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-400"
       >
-        {stock <= 0 ? 'Nema na stanju' : requiresVariant && !selectedVariant ? 'Izaberite veličinu/boju' : 'Dodaj u korpu'}
+        {stock <= 0 ? 'Nema na stanju' : requiresVariant && !selectedVariant ? 'Izaberite dimenziju aranžmana / paletu' : 'Dodaj u korpu'}
       </button>
       {added && <p className="text-sm font-medium text-green-700">Dodato u korpu</p>}
     </div>

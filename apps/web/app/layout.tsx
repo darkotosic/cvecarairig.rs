@@ -4,8 +4,8 @@ import { loadPublicStoreSettings } from '@/lib/store-settings';
 import type { PublicStoreSettings } from '@/lib/api';
 import '../styles/globals.css';
 
-const fallbackBrandName = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'Simeon Shop';
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://simeonshop.rs').replace(/\/$/, '');
+const fallbackBrandName = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'Cvećara Irig';
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
 const fallbackLogoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
 function absoluteUrl(url?: string | null): string | undefined {
@@ -27,11 +27,15 @@ function buildOrganizationJsonLd(settings: PublicStoreSettings, brandName: strin
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': 'Florist',
     name: brandName,
     url: siteUrl,
     ...(absoluteUrl(settings.logo_url) ? { logo: absoluteUrl(settings.logo_url) } : {}),
     ...(settings.company_address ? { address: settings.company_address } : {}),
+    ...(settings.store_phone ? { telephone: settings.store_phone } : {}),
+    ...(settings.store_email ? { email: settings.store_email } : {}),
+    ...(settings.service_area ? { areaServed: settings.service_area } : {}),
+    ...(settings.business_hours ? { openingHours: settings.business_hours } : {}),
     ...(sameAs.length ? { sameAs } : {}),
     ...(contactPoint ? { contactPoint } : {}),
   };
@@ -48,14 +52,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: `${brandName} | Online prodavnica garderobe`, template: `%s | ${brandName}` },
-    description: 'Simeon Shop je online prodavnica kvalitetne garderobe sa brzom isporukom, sigurnom porudžbinom i modernim dizajnom.',
+    title: { default: `${brandName} | Cveće, buketi i dostava`, template: `%s | ${brandName}` },
+    description: 'Cvećara Irig - sveži buketi, ruže, flower box aranžmani i dostava cveća u Irigu i okolini.',
     openGraph: {
       type: 'website',
       url: siteUrl,
       siteName: brandName,
-      title: `${brandName} | Online prodavnica garderobe`,
-      description: 'Kvalitetna garderoba, brza isporuka i jednostavna porudžbina.',
+      title: `${brandName} | Cveće, buketi i dostava`,
+      description: 'Buketi, ruže i cvetni aranžmani za rođendane, godišnjice, slave, svadbe i posebne trenutke.',
       images: logoUrl ? [{ url: logoUrl, alt: `${brandName} logo` }] : undefined,
     },
     twitter: { card: 'summary_large_image' },
@@ -76,12 +80,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
             <Link href="/" className="text-xl font-bold tracking-wide text-primary">{brandName}</Link>
             <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-700">
-              <Link href="/products" className="hover:text-primary">Proizvodi</Link>
+              <Link href="/products" className="hover:text-primary">Aranžmani</Link>
               <Link href="/shipping" className="hover:text-primary">Dostava</Link>
-              <Link href="/returns" className="hover:text-primary">Povraćaj</Link>
-              <Link href="/size-guide" className="hover:text-primary">Veličine</Link>
+              <Link href="/returns" className="hover:text-primary">Reklamacije</Link>
+              <Link href="/flower-care" className="hover:text-primary">Nega cveća</Link>
               <Link href="/cart" className="hover:text-primary">Korpa</Link>
-              <Link href="/checkout" className="hover:text-primary">Checkout</Link>
+              <Link href="/checkout" className="hover:text-primary">Poručivanje</Link>
             </div>
           </nav>
         </header>
@@ -90,18 +94,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 text-sm text-slate-600 sm:px-6 md:grid-cols-4 lg:px-8">
             <div>
               <p className="font-semibold text-primary">{brandName}</p>
-              <p className="mt-2">Online prodavnica garderobe sa fokusom na sigurnu porudžbinu i jasnu komunikaciju.</p>
+              <p className="mt-2">Cvećara u Irigu sa fokusom na sveže cveće, pažljivo aranžiranje i jasnu komunikaciju oko porudžbine i dostave.</p>
               {settings.company_address && <p className="mt-2">{settings.company_address}</p>}
             </div>
             <div className="flex flex-col gap-2">
               <Link href="/about">O nama</Link>
               <Link href="/contact">Kontakt</Link>
-              <Link href="/products">Proizvodi</Link>
+              <Link href="/products">Aranžmani</Link>
             </div>
             <div className="flex flex-col gap-2">
               <Link href="/shipping">Dostava</Link>
-              <Link href="/returns">Povraćaj</Link>
-              <Link href="/size-guide">Vodič za veličine</Link>
+              <Link href="/returns">Reklamacije</Link>
+              <Link href="/flower-care">Nega cveća</Link>
               <Link href="/terms-and-conditions">Uslovi kupovine</Link>
               <Link href="/privacy-policy">Politika privatnosti</Link>
             </div>

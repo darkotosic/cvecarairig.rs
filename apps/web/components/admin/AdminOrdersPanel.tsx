@@ -102,6 +102,10 @@ function OrderDetails({ order }: { order: Order }) {
             <h4 className="font-semibold">Dostava</h4>
             <p>{order.shipping_address}</p>
             <p>{order.shipping_postal_code} {order.shipping_city}</p>
+            <p className="mt-2"><strong>Primalac:</strong> {order.recipient_name || 'isti kao kupac'} {order.recipient_phone ? `• ${order.recipient_phone}` : ''}</p>
+            <p><strong>Datum/termin:</strong> {order.delivery_date || '-'} {order.delivery_time_window ? `• ${order.delivery_time_window}` : ''}</p>
+            <p><strong>Prilika:</strong> {order.occasion || '-'}</p>
+            <p><strong>Poruka za karticu:</strong> {order.card_message || '-'}</p>
             <p className="mt-2 text-xs text-slate-500">
               Accepted terms: {order.accepted_terms_at ? new Date(order.accepted_terms_at).toLocaleString('sr-RS') : '-'}
             </p>

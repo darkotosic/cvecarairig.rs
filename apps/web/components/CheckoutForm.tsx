@@ -13,8 +13,8 @@ import { Price } from './Price';
 const phonePattern = /^[0-9+/\-\s]{6,80}$/;
 
 const fields = [
-  ['customer_name', 'Ime i prezime', 'text'],
-  ['customer_phone', 'Telefon', 'tel'],
+  ['customer_name', 'Ime i prezime kupca', 'text'],
+  ['customer_phone', 'Telefon kupca', 'tel'],
   ['customer_email', 'Email', 'email'],
   ['shipping_city', 'Grad', 'text'],
   ['shipping_postal_code', 'Poštanski broj', 'text'],
@@ -60,6 +60,12 @@ function validateCheckout(form: FormData, lines: CartLine[]) {
   if (!phonePattern.test(phone)) errors.push('Telefon sme da sadrži samo cifre, +, razmak, / i - i mora imati najmanje 6 karaktera.');
   if (digits.length < 6) errors.push('Telefon mora imati najmanje 6 cifara.');
   if (!/^\d{5}$/.test(postalCode)) errors.push('Poštanski broj mora imati tačno 5 cifara.');
+  const recipientPhone = String(form.get('recipient_phone') ?? '').trim();
+  const cardMessage = String(form.get('card_message') ?? '');
+  const deliveryDate = String(form.get('delivery_date') ?? '');
+  if (recipientPhone && !phonePattern.test(recipientPhone)) errors.push('Telefon primaoca nije ispravan.');
+  if (deliveryDate && deliveryDate < new Date().toISOString().slice(0, 10)) errors.push('Datum dostave ne sme biti u prošlosti.');
+  if (cardMessage.length > 500) errors.push('Poruka za karticu može imati najviše 500 karaktera.');
   if (form.get('terms') !== 'on') errors.push('Morate prihvatiti uslove kupovine i politiku privatnosti pre slanja porudžbine.');
 
   return errors;
@@ -79,7 +85,7 @@ export function CheckoutForm() {
       <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-6">
         <p>Korpa je prazna.</p>
         <Link href="/products" className="mt-4 inline-block bg-primary px-5 py-3 text-sm font-semibold text-white">
-          Pogledaj proizvode
+          Pogledaj aranžmane
         </Link>
       </div>
     );
@@ -111,6 +117,12 @@ export function CheckoutForm() {
         shipping_postal_code: String(form.get('shipping_postal_code') ?? '').trim(),
         shipping_address: String(form.get('shipping_address') ?? '').trim(),
         note: String(form.get('note') ?? '').trim() || undefined,
+        recipient_name: String(form.get('recipient_name') ?? '').trim() || undefined,
+        recipient_phone: String(form.get('recipient_phone') ?? '').trim() || undefined,
+        delivery_date: String(form.get('delivery_date') ?? '').trim() || undefined,
+        delivery_time_window: String(form.get('delivery_time_window') ?? '').trim() || undefined,
+        card_message: String(form.get('card_message') ?? '').trim() || undefined,
+        occasion: String(form.get('occasion') ?? '').trim() || undefined,
         accepted_terms: true,
         source: 'web',
         idempotency_key: idempotencyKeyRef.current,
@@ -145,6 +157,33 @@ export function CheckoutForm() {
               />
             </label>
           ))}
+
+          <label className="text-sm font-medium text-slate-700">
+            Ime primaoca (opciono)
+            <input name="recipient_name" disabled={isSubmitting} className="mt-2 w-full border border-slate-300 px-3 py-3 outline-none focus:border-primary disabled:bg-slate-100" />
+          </label>
+          <label className="text-sm font-medium text-slate-700">
+            Telefon primaoca (opciono)
+            <input name="recipient_phone" type="tel" disabled={isSubmitting} className="mt-2 w-full border border-slate-300 px-3 py-3 outline-none focus:border-primary disabled:bg-slate-100" />
+          </label>
+          <label className="text-sm font-medium text-slate-700">
+            Datum dostave (opciono)
+            <input name="delivery_date" type="date" disabled={isSubmitting} className="mt-2 w-full border border-slate-300 px-3 py-3 outline-none focus:border-primary disabled:bg-slate-100" />
+          </label>
+          <label className="text-sm font-medium text-slate-700">
+            Vremenski okvir dostave (opciono)
+            <select name="delivery_time_window" disabled={isSubmitting} className="mt-2 w-full border border-slate-300 px-3 py-3 outline-none focus:border-primary disabled:bg-slate-100">
+              <option value="">Bilo kada tokom dana</option><option>Pre podne</option><option>Popodne</option><option>Uveče</option><option>Po dogovoru telefonom</option>
+            </select>
+          </label>
+          <label className="text-sm font-medium text-slate-700">
+            Prilika (opciono)
+            <input name="occasion" placeholder="Rođendan, godišnjica, slava..." disabled={isSubmitting} className="mt-2 w-full border border-slate-300 px-3 py-3 outline-none focus:border-primary disabled:bg-slate-100" />
+          </label>
+          <label className="text-sm font-medium text-slate-700 sm:col-span-2">
+            Poruka za karticu (opciono)
+            <textarea name="card_message" maxLength={500} disabled={isSubmitting} className="mt-2 min-h-24 w-full border border-slate-300 px-3 py-3 outline-none focus:border-primary disabled:bg-slate-100" placeholder="Npr. Srećan rođendan, voli te..." />
+          </label>
           <label className="text-sm font-medium text-slate-700 sm:col-span-2">
             Napomena za porudžbinu
             <textarea

@@ -2,7 +2,7 @@ from app.models.store_setting import StoreSetting
 
 
 def test_public_store_settings_filters_private_and_needs_no_auth(client, db):
-    db.add(StoreSetting(key="store_email", value="info@simeonshop.rs", is_public=True))
+    db.add(StoreSetting(key="store_email", value="info@cvecarairig.rs", is_public=True))
     db.add(StoreSetting(key="jwt_secret_note", value="private", is_public=True))
     db.add(StoreSetting(key="company_tax_id", value="123", is_public=False))
     db.add(StoreSetting(key="store_phone", value="+381 11 123 456", is_public=False))
@@ -13,7 +13,7 @@ def test_public_store_settings_filters_private_and_needs_no_auth(client, db):
     assert response.status_code == 200, response.text
     assert response.json() == {
         "store_phone": None,
-        "store_email": "info@simeonshop.rs",
+        "store_email": "info@cvecarairig.rs",
         "instagram_url": None,
         "facebook_url": None,
         "delivery_note": None,
@@ -23,6 +23,12 @@ def test_public_store_settings_filters_private_and_needs_no_auth(client, db):
         "company_registration_number": None,
         "company_tax_id": None,
         "logo_url": None,
+        "business_hours": None,
+        "service_area": None,
+        "same_day_cutoff": None,
+        "payment_methods": None,
+        "google_maps_url": None,
+        "whatsapp_url": None,
     }
 
 
@@ -42,4 +48,10 @@ def test_public_store_settings_empty_object_is_valid(client):
         "company_registration_number",
         "company_tax_id",
         "logo_url",
+        "business_hours",
+        "service_area",
+        "same_day_cutoff",
+        "payment_methods",
+        "google_maps_url",
+        "whatsapp_url",
     }

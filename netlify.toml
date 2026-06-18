@@ -5,10 +5,10 @@ publish = ".next"
 
 [build.environment]
 NODE_VERSION = "22"
-NEXT_PUBLIC_SITE_URL = "https://simeonshop.rs"
-NEXT_PUBLIC_BRAND_NAME = "Simeon Shop"
+NEXT_PUBLIC_SITE_URL = "https://cvecarairig.rs"
+NEXT_PUBLIC_BRAND_NAME = "Cvećara Irig"
 NEXT_PUBLIC_DEFAULT_LOCALE = "sr"
-ADMIN_ALLOWED_ORIGINS = "https://simeonshop.rs,https://www.simeonshop.rs"
+ADMIN_ALLOWED_ORIGINS = "https://cvecarairig.rs,https://www.cvecarairig.rs"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"

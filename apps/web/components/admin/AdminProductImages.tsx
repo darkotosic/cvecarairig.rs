@@ -21,7 +21,7 @@ function uploadError(error: unknown) {
     if (detail.includes('not configured')) return 'Cloudinary nije konfigurisan. Proverite CLOUDINARY_* environment promenljive.';
     return detail || `Upload greška (${error.status}).`;
   }
-  return 'Upload nije uspeo. Proverite tip slike, veličinu do 5MB i Cloudinary podešavanja.';
+  return 'Upload nije uspeo. Proverite tip slike, limit od 5MB i Cloudinary podešavanja.';
 }
 
 function UploadImageForm({ uploading, preview, onPreview, onSubmit }: { uploading: boolean; preview: string | null; onPreview: (file?: File) => void; onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {

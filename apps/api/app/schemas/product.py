@@ -90,6 +90,12 @@ class ProductBase(BaseModel):
     image_url: str | None = Field(default=None, max_length=1000)
     material: str | None = Field(default=None, max_length=255)
     care_instructions: str | None = None
+    arrangement_type: str | None = Field(default=None, max_length=120)
+    occasion: str | None = Field(default=None, max_length=120)
+    color_palette: str | None = Field(default=None, max_length=120)
+    flower_count: int | None = Field(default=None, ge=0)
+    is_same_day_delivery: bool = True
+    lead_time_hours: int = Field(default=2, ge=0)
     seo_title: str | None = Field(default=None, max_length=255)
     seo_description: str | None = Field(default=None, max_length=500)
     sort_order: int = 0
@@ -114,6 +120,12 @@ class ProductUpdate(BaseModel):
     image_url: str | None = Field(default=None, max_length=1000)
     material: str | None = Field(default=None, max_length=255)
     care_instructions: str | None = None
+    arrangement_type: str | None = Field(default=None, max_length=120)
+    occasion: str | None = Field(default=None, max_length=120)
+    color_palette: str | None = Field(default=None, max_length=120)
+    flower_count: int | None = Field(default=None, ge=0)
+    is_same_day_delivery: bool | None = None
+    lead_time_hours: int | None = Field(default=None, ge=0)
     seo_title: str | None = Field(default=None, max_length=255)
     seo_description: str | None = Field(default=None, max_length=500)
     sort_order: int | None = None

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import relationship
 
 from app.db.base import Base
@@ -22,6 +22,12 @@ class Order(Base):
     shipping_postal_code = Column(String(32), nullable=False)
     shipping_address = Column(String(500), nullable=False)
     note = Column(Text, nullable=True)
+    recipient_name = Column(String(255), nullable=True)
+    recipient_phone = Column(String(80), nullable=True)
+    delivery_date = Column(Date, nullable=True)
+    delivery_time_window = Column(String(120), nullable=True)
+    card_message = Column(Text, nullable=True)
+    occasion = Column(String(120), nullable=True)
     idempotency_key = Column(String(120), nullable=True, unique=True, index=True)
     confirmed_at = Column(DateTime(timezone=True), nullable=True)
     packed_at = Column(DateTime(timezone=True), nullable=True)

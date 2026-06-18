@@ -6,7 +6,7 @@ import { FormEvent, useCallback, useEffect, useState } from 'react';
 import type { StoreSetting } from '@/lib/api';
 import { ApiError, getAdminSettings, updateAdminSetting } from '@/lib/api';
 
-type SettingSection = 'Kontakt' | 'Social' | 'Dostava' | 'Povraćaj' | 'Firma' | 'Brend';
+type SettingSection = 'Kontakt' | 'Social' | 'Dostava' | 'Reklamacije' | 'Firma' | 'Brend' | 'Radno vreme' | 'Područje dostave' | 'Plaćanje' | 'Google Maps' | 'WhatsApp';
 
 type PublicSettingConfig = {
   section: SettingSection;
@@ -64,7 +64,7 @@ const publicSettings: PublicSettingConfig[] = [
     defaultPublic: true,
   },
   {
-    section: 'Povraćaj',
+    section: 'Reklamacije',
     key: 'return_policy_short',
     label: 'Kratka politika povraćaja',
     description: 'Prikazuje se na strani za povraćaj i u uslovima kupovine.',
@@ -115,6 +115,13 @@ const publicSettings: PublicSettingConfig[] = [
     inputType: 'url',
     defaultPublic: true,
   },
+
+  { section: 'Radno vreme', key: 'business_hours', label: 'Radno vreme', description: 'Npr. Pon-sub 08:00-20:00, nedelja po dogovoru.', field: 'textarea', defaultPublic: true },
+  { section: 'Područje dostave', key: 'service_area', label: 'Područje dostave', description: 'Npr. Irig, Vrdnik, Rivica, Ruma i okolna mesta po dogovoru.', field: 'textarea', defaultPublic: true },
+  { section: 'Područje dostave', key: 'same_day_cutoff', label: 'Dostava istog dana', description: 'Npr. Dostava istog dana za porudžbine potvrđene do 15:00.', field: 'textarea', defaultPublic: true },
+  { section: 'Plaćanje', key: 'payment_methods', label: 'Načini plaćanja', description: 'Npr. Plaćanje pouzećem, uplata na račun ili po dogovoru.', field: 'textarea', defaultPublic: true },
+  { section: 'Google Maps', key: 'google_maps_url', label: 'Google Maps URL', description: 'Link ka lokaciji cvećare na Google Maps.', field: 'input', inputType: 'url', defaultPublic: true },
+  { section: 'WhatsApp', key: 'whatsapp_url', label: 'WhatsApp URL', description: 'Link za WhatsApp kontakt.', field: 'input', inputType: 'url', defaultPublic: true },
 ];
 
 function message(error: unknown) {
@@ -127,7 +134,7 @@ function message(error: unknown) {
   return 'Podešavanja trenutno nisu dostupna.';
 }
 
-const sections: SettingSection[] = ['Kontakt', 'Social', 'Dostava', 'Povraćaj', 'Firma', 'Brend'];
+const sections: SettingSection[] = ['Kontakt', 'Social', 'Dostava', 'Reklamacije', 'Radno vreme', 'Područje dostave', 'Plaćanje', 'Google Maps', 'WhatsApp', 'Firma', 'Brend'];
 
 export function AdminSettingsPanel() {
   const [settings, setSettings] = useState<Record<string, StoreSetting>>({});

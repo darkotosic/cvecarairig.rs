@@ -1,6 +1,6 @@
-# Getting Started - SimeonShop.rs Development
+# Getting Started - cvecarairig.rs Development
 
-Complete guide for setting up and running SimeonShop.rs locally.
+Complete guide for setting up and running cvecarairig.rs locally.
 
 ## 📋 Prerequisites
 
@@ -114,7 +114,7 @@ make backend-dev     # Terminal 2
 
 ### Frontend Health Check
 Open `http://localhost:3000` in browser. You should see:
-- SimeonShop.rs homepage
+- cvecarairig.rs homepage
 - Navigation menu
 - "API Status: ✓ Online" or "✗ Offline"
 
@@ -126,7 +126,7 @@ curl http://localhost:8000/api/v1/health
 # Should return:
 # {
 #   "status": "ok",
-#   "message": "SimeonShop.rs API is running",
+#   "message": "cvecarairig.rs API is running",
 #   "version": "1.0.0"
 # }
 ```
@@ -164,7 +164,7 @@ cd apps/api && cp .env.example .env
 ## 🗂️ Project Structure Overview
 
 ```
-simeonshop/
+cvecarairig/
 ├── apps/
 │   ├── web/                # Frontend (Next.js)
 │   │   ├── pages/         # All 8 main pages + admin pages

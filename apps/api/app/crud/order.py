@@ -44,7 +44,7 @@ def validate_order_status_transition(old_status: str, new_status: str) -> None:
 
 def generate_order_number() -> str:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d")
-    return f"SIM-{stamp}-{token_hex(4).upper()}"
+    return f"CIR-{stamp}-{token_hex(4).upper()}"
 
 
 def create_order_from_cart(db: Session, user_id: int, payload: CheckoutCreate) -> Order:
@@ -83,6 +83,12 @@ def create_order_from_cart(db: Session, user_id: int, payload: CheckoutCreate) -
         shipping_postal_code=payload.shipping_postal_code,
         shipping_address=payload.shipping_address,
         note=payload.note,
+        recipient_name=payload.recipient_name,
+        recipient_phone=payload.recipient_phone,
+        delivery_date=payload.delivery_date,
+        delivery_time_window=payload.delivery_time_window,
+        card_message=payload.card_message,
+        occasion=payload.occasion,
         accepted_terms_at=datetime.now(timezone.utc),
         source="legacy_checkout",
     )
@@ -228,6 +234,12 @@ def create_guest_order(db: Session, payload: GuestCheckoutCreate, customer_ip: s
             shipping_postal_code=payload.shipping_postal_code,
             shipping_address=payload.shipping_address,
             note=payload.note,
+        recipient_name=payload.recipient_name,
+        recipient_phone=payload.recipient_phone,
+        delivery_date=payload.delivery_date,
+        delivery_time_window=payload.delivery_time_window,
+        card_message=payload.card_message,
+        occasion=payload.occasion,
             idempotency_key=payload.idempotency_key,
             accepted_terms_at=datetime.now(timezone.utc) if payload.accepted_terms else None,
             customer_ip=customer_ip,

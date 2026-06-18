@@ -3,20 +3,20 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: simeonshop-postgres
+    container_name: cvecarairig-postgres
     environment:
-      POSTGRES_DB: simeonshop
-      POSTGRES_USER: simeonshop
-      POSTGRES_PASSWORD: simeonshop
+      POSTGRES_DB: cvecarairig
+      POSTGRES_USER: cvecarairig
+      POSTGRES_PASSWORD: cvecarairig
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - simeonshop-network
+      - cvecarairig-network
 
   backend:
-    container_name: simeonshop-api
+    container_name: cvecarairig-api
     build:
       context: ./apps/api
       dockerfile: Dockerfile
@@ -24,16 +24,16 @@ services:
       - "8000:8000"
     environment:
       APP_ENV: development
-      APP_NAME: SimeonShop API
+      APP_NAME: CvecaraIrig API
       PROJECT_VERSION: 0.3.0
       API_PREFIX: /api/v1
       ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
       FRONTEND_URL: http://localhost:3000
-      DATABASE_URL: postgresql://simeonshop:simeonshop@postgres:5432/simeonshop
+      DATABASE_URL: postgresql://cvecarairig:cvecarairig@postgres:5432/cvecarairig
       JWT_SECRET: local-dev-secret-change-before-production
       JWT_ALGORITHM: HS256
       ACCESS_TOKEN_EXPIRE_MINUTES: 1440
-      ADMIN_EMAIL: admin@simeonshop.rs
+      ADMIN_EMAIL: admin@cvecarairig.rs
       RATE_LIMIT_DEFAULT: 120/minute
       RATE_LIMIT_AUTH: 10/minute
       BOOTSTRAP_ADMIN_TOKEN: local-bootstrap-token
@@ -48,10 +48,10 @@ services:
     depends_on:
       - postgres
     networks:
-      - simeonshop-network
+      - cvecarairig-network
 
   frontend:
-    container_name: simeonshop-web
+    container_name: cvecarairig-web
     build:
       context: ./apps/web
       dockerfile: Dockerfile
@@ -60,7 +60,7 @@ services:
     environment:
       NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
       NEXT_PUBLIC_SITE_URL: http://localhost:3000
-      NEXT_PUBLIC_BRAND_NAME: Simeon Shop
+      NEXT_PUBLIC_BRAND_NAME: Cvećara Irig
       NEXT_PUBLIC_DEFAULT_LOCALE: sr
       API_BASE_URL: http://backend:8000
       ADMIN_ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
@@ -72,11 +72,11 @@ services:
     depends_on:
       - backend
     networks:
-      - simeonshop-network
+      - cvecarairig-network
 
 volumes:
   postgres_data:
 
 networks:
-  simeonshop-network:
+  cvecarairig-network:
     driver: bridge
