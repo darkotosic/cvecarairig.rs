@@ -80,11 +80,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">{product.category?.name}</p>
         <h1 className="mt-2 text-4xl font-bold text-primary">{product.name}</h1>
         <p className="mt-4 text-slate-700">{product.description ?? product.short_description}</p>
-        <ProductPurchaseBox product={product} />
+        <ProductPurchaseBox product={product} phone={settings.store_phone} />
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <article className="rounded-3xl bg-slate-50 p-5">
             <h2 className="font-bold text-primary">Dostava i plaćanje</h2>
-            <p className="mt-2 text-sm text-slate-600">Plaćanje pouzećem. Potvrđujemo porudžbinu pre slanja.</p>
+            <p className="mt-2 text-sm text-slate-600">Poručivanje ide telefonom. Tokom poziva potvrđujemo dostupnost, plaćanje i dostavu.</p>
           </article>
           <article className="rounded-3xl bg-slate-50 p-5">
             <h2 className="font-bold text-primary">Reklamacije</h2>

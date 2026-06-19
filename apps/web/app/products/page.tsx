@@ -4,6 +4,7 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { ProductFilters } from '@/components/ProductFilters';
 import { ProductGrid } from '@/components/ProductGrid';
 import { getCategories, getProducts, type Category, type ProductListResponse } from '@/lib/api';
+import { loadPublicStoreSettings } from '@/lib/store-settings';
 
 export const metadata: Metadata = { title: 'Aranžmani', description: 'Pregled Cvećara Irig aranžmana sa filterima, kategorijama i sortiranjem.' };
 
@@ -62,7 +63,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
     sort: uiParams.sort,
     page: toPage(uiParams.page),
   };
-  const catalog = await loadCatalog(apiParams);
+  const [catalog, settings] = await Promise.all([loadCatalog(apiParams), loadPublicStoreSettings()]);
 
   if (!catalog) {
     return (
@@ -83,7 +84,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
       <div className="mt-8 grid gap-6 lg:grid-cols-[280px_1fr]">
         <ProductFilters categories={catalog.categories} searchParams={uiParams} />
         <div>
-          <ProductGrid products={catalog.products.items} />
+          <ProductGrid products={catalog.products.items} phone={settings.store_phone} />
           {catalog.products.items.length === 0 && (
             <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 text-sm text-slate-700">
               <p className="text-lg font-semibold text-primary">Nema aranžmana za izabrane filtere.</p>

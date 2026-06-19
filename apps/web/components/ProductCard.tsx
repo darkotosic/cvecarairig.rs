@@ -5,7 +5,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import type { Product } from '@/lib/api';
-import { AddToCartButton } from './AddToCartButton';
+import { CallToOrderButton } from './CallToOrderButton';
 import { Price } from './Price';
 
 function getPrimaryImage(product: Product) {
@@ -13,7 +13,7 @@ function getPrimaryImage(product: Product) {
   return sortedImages[0]?.image_url ?? product.image_url;
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, phone }: { product: Product; phone?: string | null }) {
   const productHref = `/products/${encodeURIComponent(product.slug)}`;
   const [imageFailed, setImageFailed] = useState(false);
   const image = getPrimaryImage(product);
@@ -48,9 +48,9 @@ export function ProductCard({ product }: { product: Product }) {
             </p>
           )}
         </div>
-        {hasVariants && <p className="mt-2 text-xs font-medium text-slate-500">Dostupne varijante - izaberite dimenziju aranžmana / paletu na detalju.</p>}
+        {hasVariants && <p className="mt-2 text-xs font-medium text-slate-500">Dostupne varijante - detalje i dostupnost potvrđujemo telefonom.</p>}
         <div className="mt-auto pt-4">
-          {hasVariants ? <Link href={productHref} className="block w-full bg-primary px-4 py-3 text-center text-sm font-semibold text-white">Izaberi dimenziju aranžmana</Link> : <AddToCartButton product={product} />}
+          <CallToOrderButton phone={phone} productName={product.name} />
         </div>
       </div>
     </article>
