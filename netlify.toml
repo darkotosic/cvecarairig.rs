@@ -8,6 +8,7 @@ NODE_VERSION = "22"
 NEXT_PUBLIC_SITE_URL = "https://cvecarairig.rs"
 NEXT_PUBLIC_BRAND_NAME = "Online Cvećara Irig"
 NEXT_PUBLIC_DEFAULT_LOCALE = "sr"
+NEXT_PUBLIC_CONTACT_EMAIL = "cvecaralotos022@gmail.com"
 ADMIN_ALLOWED_ORIGINS = "https://cvecarairig.rs,https://www.cvecarairig.rs"
 
 [[plugins]]
