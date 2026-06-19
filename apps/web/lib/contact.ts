@@ -1,4 +1,4 @@
-export const GLOBAL_CTA_PHONE = '+381629053553';
+export const GLOBAL_CTA_PHONE = '+381629253553';
 
 export function normalizeTelHref(phone: string) {
   const trimmed = phone.trim();
