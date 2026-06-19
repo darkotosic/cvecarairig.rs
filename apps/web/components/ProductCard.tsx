@@ -14,6 +14,7 @@ function getPrimaryImage(product: Product) {
 }
 
 export function ProductCard({ product }: { product: Product }) {
+  const productHref = `/products/${encodeURIComponent(product.slug)}`;
   const [imageFailed, setImageFailed] = useState(false);
   const image = getPrimaryImage(product);
   const stock = product.effective_stock_quantity ?? product.stock_quantity;
@@ -22,7 +23,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      <Link href={`/products/${product.slug}`} className="relative block aspect-[4/5] bg-slate-100">
+      <Link href={productHref} className="relative block aspect-[4/5] bg-slate-100">
         {image && !imageFailed ? (
           <img src={image} alt={`${product.name} - primarna slika proizvoda`} onError={() => setImageFailed(true)} className="h-full w-full object-cover transition group-hover:scale-105" />
         ) : (
@@ -36,7 +37,7 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
       <div className="flex flex-1 flex-col p-5">
         <p className="text-sm text-slate-500">{product.category?.name ?? product.sku ?? 'Cvećara Irig'}</p>
-        <Link href={`/products/${product.slug}`} className="mt-1 text-lg font-semibold text-primary hover:underline">{product.name}</Link>
+        <Link href={productHref} className="mt-1 text-lg font-semibold text-primary hover:underline">{product.name}</Link>
         {product.short_description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{product.short_description}</p>}
         <div className="mt-3 flex flex-wrap items-baseline gap-2">
           <p className="font-bold"><Price cents={product.price_cents} currency={product.currency} /></p>
@@ -49,7 +50,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         {hasVariants && <p className="mt-2 text-xs font-medium text-slate-500">Dostupne varijante - izaberite dimenziju aranžmana / paletu na detalju.</p>}
         <div className="mt-auto pt-4">
-          {hasVariants ? <Link href={`/products/${product.slug}`} className="block w-full bg-primary px-4 py-3 text-center text-sm font-semibold text-white">Izaberi dimenziju aranžmana</Link> : <AddToCartButton product={product} />}
+          {hasVariants ? <Link href={productHref} className="block w-full bg-primary px-4 py-3 text-center text-sm font-semibold text-white">Izaberi dimenziju aranžmana</Link> : <AddToCartButton product={product} />}
         </div>
       </div>
     </article>
