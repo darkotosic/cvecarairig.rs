@@ -3,12 +3,12 @@
 import { useMemo, useState } from 'react';
 import type { Product, ProductVariant } from '@/lib/api';
 import { Price } from './Price';
-import { AddToCartButton } from './AddToCartButton';
+import { CallToOrderButton } from './CallToOrderButton';
 
 const variantLabel = (variant: ProductVariant) => [variant.size, variant.color].filter(Boolean).join(' / ') || variant.sku || `Varijanta ${variant.id}`;
 const variantPrice = (product: Product, variant?: ProductVariant) => variant?.price_cents ?? product.price_cents;
 
-export function ProductPurchaseBox({ product }: { product: Product }) {
+export function ProductPurchaseBox({ product, phone }: { product: Product; phone?: string | null }) {
   const activeVariants = useMemo(() => product.variants.filter((variant) => variant.is_active), [product.variants]);
   const [variantId, setVariantId] = useState<number | ''>('');
   const selectedVariant = activeVariants.find((variant) => variant.id === variantId);
@@ -27,7 +27,7 @@ export function ProductPurchaseBox({ product }: { product: Product }) {
       </div>
       {requiresVariant && (
         <label className="block font-medium">
-          Dimenzija aranžmana aranžmana / paleta
+          Dimenzija aranžmana / paleta
           <select value={variantId} onChange={(event) => setVariantId(event.target.value ? Number(event.target.value) : '')} className="mt-2 w-full border border-slate-300 px-3 py-3">
             <option value="">Izaberite dimenziju aranžmana / paletu</option>
             {activeVariants.map((variant) => <option key={variant.id} value={variant.id}>{variantLabel(variant)} · {variant.price_cents ? `${(variant.price_cents / 100).toLocaleString('sr-RS')} ${product.currency}` : 'standardna cena'} · {variant.stock_quantity > 0 ? `${variant.stock_quantity} kom.` : 'Nema na stanju'}</option>)}
@@ -38,7 +38,8 @@ export function ProductPurchaseBox({ product }: { product: Product }) {
       {selectedOutOfStock && <p className="rounded-lg bg-red-50 p-3 font-medium text-red-700">Izabrana varijanta nema na stanju.</p>}
       <p>Stanje: {stock === undefined ? 'Izaberite dimenziju aranžmana za dostupnost' : stock > 0 ? `${stock} komada dostupno` : 'Nema na stanju'}</p>
       {sku && <p>SKU: {sku}</p>}
-      <AddToCartButton product={product} selectedVariant={selectedVariant} requiresVariant={requiresVariant} />
+      <CallToOrderButton phone={phone} productName={product.name} />
+      <p className="text-xs text-slate-500">Poručivanje ide telefonom kako bismo odmah potvrdili dostupnost, izradu i dostavu.</p>
     </div>
   );
 }

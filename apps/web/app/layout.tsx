@@ -85,13 +85,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Link href="/shipping" className="hover:text-primary">Dostava</Link>
               <Link href="/returns" className="hover:text-primary">Reklamacije</Link>
               <Link href="/flower-care" className="hover:text-primary">Nega cveća</Link>
-              <Link href="/cart" className="hover:text-primary">Korpa</Link>
-              <Link href="/checkout" className="hover:text-primary">Poručivanje</Link>
+              {settings.store_phone ? <a href={`tel:${settings.store_phone.replace(/[^\d+]/g, '')}`} className="font-semibold text-primary hover:text-primary/80">Pozovite</a> : <Link href="/contact" className="font-semibold text-primary hover:text-primary/80">Pozovite</Link>}
             </div>
           </nav>
         </header>
         {children}
-        <StickyCallButton />
+        <StickyCallButton phone={settings.store_phone} />
         <footer className="border-t border-slate-200 bg-white">
           <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 text-sm text-slate-600 sm:px-6 md:grid-cols-4 lg:px-8">
             <div>

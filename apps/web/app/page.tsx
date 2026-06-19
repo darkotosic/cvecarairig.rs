@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ProductCard } from '@/components/ProductCard';
-import { getCategories, getProducts, getPublicStoreSettings, type Category, type Product } from '@/lib/api';
+import { getCategories, getProducts, type Category, type Product } from '@/lib/api';
+import { loadPublicStoreSettings } from '@/lib/store-settings';
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
 
 export async function generateMetadata(): Promise<Metadata> {
   let logoUrl: string | undefined;
   try {
-    const settings = await getPublicStoreSettings();
+    const settings = await loadPublicStoreSettings();
     logoUrl = settings.logo_url ?? undefined;
   } catch {}
 
@@ -34,7 +35,7 @@ async function getFeatured(): Promise<{ products: Product[]; categories: Categor
 const trustBadges = ['Sveži buketi i aranžmani', 'Dostava u Irigu i okolini', 'Porudžbine za posebne prilike', 'Brza potvrda telefonom'];
 
 export default async function HomePage() {
-  const { products, categories, available } = await getFeatured();
+  const [{ products, categories, available }, settings] = await Promise.all([getFeatured(), loadPublicStoreSettings()]);
 
   return (
     <main>
@@ -69,7 +70,7 @@ export default async function HomePage() {
         </div>
         {products.length ? (
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => <ProductCard key={product.id} product={product} />)}
+            {products.map((product) => <ProductCard key={product.id} product={product} phone={settings.store_phone} />)}
           </div>
         ) : (
           <div className="mt-8 rounded-3xl border border-dashed border-slate-300 bg-white p-8 text-slate-600">
