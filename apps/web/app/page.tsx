@@ -84,7 +84,7 @@ export default async function HomePage() {
           <h2 className="text-3xl font-bold text-primary">Kategorije</h2>
           {categories.length ? (
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {categories.map((category) => <Link key={category.slug} href={`/products?category=${category.slug}`} className="rounded-3xl bg-white p-6 font-semibold text-primary shadow-sm ring-1 ring-slate-200">{category.name}</Link>)}
+              {categories.map((category) => <Link key={category.slug} href={`/products?category=${encodeURIComponent(category.slug)}`} className="rounded-3xl bg-white p-6 font-semibold text-primary shadow-sm ring-1 ring-slate-200">{category.name}</Link>)}
             </div>
           ) : <div className="mt-6 rounded-3xl border border-dashed border-slate-300 bg-white p-6 text-slate-600">Kategorije aranžmana će biti prikazane kada ih API vrati.</div>}
         </div>

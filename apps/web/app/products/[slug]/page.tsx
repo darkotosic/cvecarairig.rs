@@ -23,11 +23,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
       title: product.seo_title ?? `${product.name} | Cvećara Irig`,
       description: product.seo_description ?? product.short_description ?? product.description ?? `Poručite ${product.name} u Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
-      alternates: { canonical: `/products/${product.slug}` },
+      alternates: { canonical: `/products/${encodeURIComponent(product.slug)}` },
       openGraph: {
         title: product.name,
         description: product.short_description ?? product.description ?? undefined,
-        url: `${siteUrl}/products/${product.slug}`,
+        url: `${siteUrl}/products/${encodeURIComponent(product.slug)}`,
         images: image ? [{ url: image, alt: primaryImage ? product.name : `${settings.company_name ?? 'Cvećara Irig'} logo` }] : undefined,
       },
     };
@@ -52,7 +52,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const imageUrls = images.map((image) => absoluteUrl(image.image_url)).filter((url): url is string => Boolean(url));
   const jsonLdImages = imageUrls.length > 0 ? imageUrls : fallbackImage ? [fallbackImage] : [];
   const stock = product.effective_stock_quantity ?? product.stock_quantity;
-  const productUrl = `${siteUrl}/products/${product.slug}`;
+  const productUrl = `${siteUrl}/products/${encodeURIComponent(product.slug)}`;
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
