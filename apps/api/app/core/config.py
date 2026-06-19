@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     JWT_SECRET: str = "change-me-in-production"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
-    ADMIN_EMAIL: str = "admin@cvecarairig.rs"
+    ADMIN_EMAIL: str = "cvecaralotos022@gmail.com"
     ADMIN_PASSWORD: str | None = None
     ADMIN_FULL_NAME: str = "Online Cvećara Irig Admin"
     ALLOW_PUBLIC_REGISTRATION: bool = False

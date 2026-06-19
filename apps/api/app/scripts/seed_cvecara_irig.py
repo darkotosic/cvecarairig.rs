@@ -12,7 +12,7 @@ CATEGORIES = [
 ]
 SETTINGS = {
     "company_name": "Online Cvećara Irig",
-    "store_email": "info@cvecarairig.rs",
+    "store_email": "cvecaralotos022@gmail.com",
     "service_area": "Irig, Vrdnik, Rivica, Ruma i okolna mesta po dogovoru",
     "same_day_cutoff": "Dostava istog dana za potvrđene porudžbine do 15:00",
     "payment_methods": "Plaćanje pouzećem, uplata na račun ili po dogovoru",
