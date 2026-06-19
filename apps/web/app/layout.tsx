@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { StickyCallButton } from '@/components/StickyCallButton';
 import { loadPublicStoreSettings } from '@/lib/store-settings';
 import type { PublicStoreSettings } from '@/lib/api';
 import '../styles/globals.css';
@@ -90,6 +91,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </nav>
         </header>
         {children}
+        <StickyCallButton />
         <footer className="border-t border-slate-200 bg-white">
           <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 text-sm text-slate-600 sm:px-6 md:grid-cols-4 lg:px-8">
             <div>
