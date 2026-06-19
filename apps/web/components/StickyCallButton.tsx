@@ -6,11 +6,11 @@ export function StickyCallButton() {
     <a
       href={`tel:${callPhoneNumber}`}
       aria-label={`Pozovite Cvećaru Irig na ${displayPhoneNumber}`}
-      className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/30 transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-primary/30 sm:bottom-6 sm:right-6 sm:h-16 sm:w-16"
+      className="fixed bottom-5 right-5 z-50 inline-flex h-14 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-primary/30 sm:bottom-6 sm:right-6 sm:h-16 sm:px-6 sm:text-base"
     >
       <svg
         aria-hidden="true"
-        className="h-7 w-7 sm:h-8 sm:w-8"
+        className="h-6 w-6 shrink-0 sm:h-7 sm:w-7"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +20,7 @@ export function StickyCallButton() {
           fill="currentColor"
         />
       </svg>
+      <span>Pozovite</span>
     </a>
   );
 }

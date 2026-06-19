@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Product, ProductImage } from '@/lib/api';
 
 type GalleryImage = Pick<ProductImage, 'id' | 'image_url' | 'alt_text' | 'sort_order' | 'is_primary'>;
@@ -20,8 +20,27 @@ export function ProductGallery({ product }: { product: Product }) {
   const images = useMemo(() => getProductImages(product), [product]);
   const [activeUrl, setActiveUrl] = useState(images[0]?.image_url ?? null);
   const [failedUrls, setFailedUrls] = useState<string[]>([]);
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const activeImage = images.find((image) => image.image_url === activeUrl) ?? images[0];
   const activeFailed = activeImage ? failedUrls.includes(activeImage.image_url) : false;
+  const activeAlt = activeImage?.alt_text ?? `${product.name} - prikaz proizvoda`;
+
+  useEffect(() => {
+    if (!isFullscreenOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsFullscreenOpen(false);
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isFullscreenOpen]);
 
   if (!images.length) {
     return <GalleryPlaceholder productName={product.name} />;
@@ -29,7 +48,20 @@ export function ProductGallery({ product }: { product: Product }) {
 
   return (
     <section className="grid gap-4" aria-label={`Galerija proizvoda ${product.name}`}>
-      {activeFailed ? <GalleryPlaceholder productName={product.name} /> : <img src={activeImage.image_url} alt={activeImage.alt_text ?? `${product.name} - prikaz proizvoda`} onError={() => setFailedUrls((urls) => [...urls, activeImage.image_url])} className="aspect-[4/5] w-full rounded-3xl bg-slate-100 object-cover" />}
+      {activeFailed ? (
+        <GalleryPlaceholder productName={product.name} />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setIsFullscreenOpen(true)}
+          className="group relative block overflow-hidden rounded-3xl text-left focus:outline-none focus:ring-4 focus:ring-primary/30"
+          aria-label={`Otvori sliku proizvoda ${product.name} preko celog ekrana`}
+        >
+          <img src={activeImage.image_url} alt={activeAlt} onError={() => setFailedUrls((urls) => [...urls, activeImage.image_url])} className="aspect-[4/5] w-full bg-slate-100 object-cover transition group-hover:scale-[1.02]" />
+          <span className="absolute bottom-4 right-4 rounded-full bg-black/65 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm">Uvećaj</span>
+        </button>
+      )}
+
       <div className="grid grid-cols-4 gap-3">
         {images.map((image, index) => {
           const failed = failedUrls.includes(image.image_url);
@@ -41,6 +73,15 @@ export function ProductGallery({ product }: { product: Product }) {
           );
         })}
       </div>
+
+      {isFullscreenOpen && activeImage && !activeFailed && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/90 p-4 sm:p-8" role="dialog" aria-modal="true" aria-label={`Uvećana slika proizvoda ${product.name}`} onClick={() => setIsFullscreenOpen(false)}>
+          <button type="button" className="absolute right-4 top-4 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-slate-900 shadow-lg transition hover:bg-white focus:outline-none focus:ring-4 focus:ring-white/40" onClick={() => setIsFullscreenOpen(false)}>
+            Zatvori
+          </button>
+          <img src={activeImage.image_url} alt={activeAlt} className="max-h-[88vh] max-w-full rounded-2xl object-contain shadow-2xl" onClick={(event) => event.stopPropagation()} onError={() => { setFailedUrls((urls) => [...urls, activeImage.image_url]); setIsFullscreenOpen(false); }} />
+        </div>
+      )}
     </section>
   );
 }
