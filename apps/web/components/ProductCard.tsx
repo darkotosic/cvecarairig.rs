@@ -36,7 +36,7 @@ export function ProductCard({ product, phone }: { product: Product; phone?: stri
         {hasDiscount && <span className="absolute right-3 top-3 rounded-full bg-gold px-3 py-1 text-xs font-semibold text-primary">Sniženo</span>}
       </Link>
       <div className="flex flex-1 flex-col p-5">
-        <p className="text-sm text-slate-500">{product.category?.name ?? product.sku ?? 'Cvećara Irig'}</p>
+        <p className="text-sm text-slate-500">{product.category?.name ?? product.sku ?? 'Online Cvećara Irig'}</p>
         <Link href={productHref} className="mt-1 text-lg font-semibold text-primary hover:underline">{product.name}</Link>
         {product.short_description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{product.short_description}</p>}
         <div className="mt-3 flex flex-wrap items-baseline gap-2">

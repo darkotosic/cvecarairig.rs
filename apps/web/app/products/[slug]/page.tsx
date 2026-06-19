@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const fallbackImage = absoluteUrl(settings.logo_url) ?? absoluteUrl(fallbackLogoUrl);
     const image = primaryImage ?? fallbackImage;
     return {
-      title: product.seo_title ?? `${product.name} | Cvećara Irig`,
+      title: product.seo_title ?? `${product.name} | Online Cvećara Irig`,
       description: product.seo_description ?? product.short_description ?? product.description ?? `Poručite ${product.name} u Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
       alternates: { canonical: `/products/${encodeURIComponent(product.slug)}` },
       openGraph: {
         title: product.name,
         description: product.short_description ?? product.description ?? undefined,
         url: `${siteUrl}/products/${encodeURIComponent(product.slug)}`,
-        images: image ? [{ url: image, alt: primaryImage ? product.name : `${settings.company_name ?? 'Cvećara Irig'} logo` }] : undefined,
+        images: image ? [{ url: image, alt: primaryImage ? product.name : `${settings.company_name ?? 'Online Cvećara Irig'} logo` }] : undefined,
       },
     };
   } catch {

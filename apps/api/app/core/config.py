@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     ADMIN_EMAIL: str = "admin@cvecarairig.rs"
     ADMIN_PASSWORD: str | None = None
-    ADMIN_FULL_NAME: str = "Cvećara Irig Admin"
+    ADMIN_FULL_NAME: str = "Online Cvećara Irig Admin"
     ALLOW_PUBLIC_REGISTRATION: bool = False
     BOOTSTRAP_ADMIN_TOKEN: str | None = None
 
@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     SMTP_USERNAME: str | None = None
     SMTP_PASSWORD: str | None = None
     SMTP_FROM_EMAIL: str | None = None
-    SMTP_FROM_NAME: str = "Cvećara Irig"
+    SMTP_FROM_NAME: str = "Online Cvećara Irig"
 
     RATE_LIMIT_DEFAULT: str = "120/minute"
     RATE_LIMIT_AUTH: str = "10/minute"

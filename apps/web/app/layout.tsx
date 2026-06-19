@@ -6,7 +6,7 @@ import { loadPublicStoreSettings } from '@/lib/store-settings';
 import type { PublicStoreSettings } from '@/lib/api';
 import '../styles/globals.css';
 
-const fallbackBrandName = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'Cvećara Irig';
+const fallbackBrandName = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'Online Cvećara Irig';
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
 const fallbackLogoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
 
@@ -63,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title: { default: `${brandName} | Cveće, buketi i dostava`, template: `%s | ${brandName}` },
     description:
-      'Cvećara Irig - sveži buketi, ruže, flower box aranžmani i dostava cveća u Irigu i okolini.',
+      'Online Cvećara Irig - sveži buketi, ruže, flower box aranžmani i dostava cveća u Irigu i okolini.',
     applicationName: brandName,
     manifest: '/site.webmanifest',
     icons: {

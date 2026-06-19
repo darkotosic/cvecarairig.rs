@@ -6,7 +6,7 @@ import { ProductGrid } from '@/components/ProductGrid';
 import { getCategories, getProducts, type Category, type ProductListResponse } from '@/lib/api';
 import { loadPublicStoreSettings } from '@/lib/store-settings';
 
-export const metadata: Metadata = { title: 'Aranžmani', description: 'Pregled Cvećara Irig aranžmana sa filterima, kategorijama i sortiranjem.' };
+export const metadata: Metadata = { title: 'Aranžmani', description: 'Pregled Online Cvećara Irig aranžmana sa filterima, kategorijama i sortiranjem.' };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;

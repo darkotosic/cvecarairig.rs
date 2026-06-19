@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     openGraph: {
-      title: 'Cvećara Irig',
+      title: 'Online Cvećara Irig',
       description: 'Cveće za svaki važan trenutak u Irigu i okolini.',
       url: siteUrl,
       images: logoUrl ? [{ url: logoUrl }] : undefined,
@@ -44,7 +44,7 @@ export default async function HomePage() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-gold">cvecarairig.rs</p>
             <h1 className="mt-4 text-4xl font-bold sm:text-6xl">Cveće za svaki važan trenutak u Irigu i okolini.</h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-slate-200">Cvećara Irig nudi sveže bukete, ruže, flower box aranžmane i poklon aranžmane sa brzom potvrdom porudžbine i lokalnom dostavom.</p>
+            <p className="mt-5 max-w-xl text-lg leading-8 text-slate-200">Online Cvećara Irig nudi sveže bukete, ruže, flower box aranžmane i poklon aranžmane sa brzom potvrdom porudžbine i lokalnom dostavom.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/products" className="bg-white px-5 py-3 text-sm font-semibold text-primary">Pogledaj aranžmane</Link>
               <Link href="/shipping" className="border border-white/40 px-5 py-3 text-sm font-semibold text-white">Dostava i poručivanje</Link>

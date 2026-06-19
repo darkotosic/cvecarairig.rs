@@ -14,7 +14,7 @@ export default async function AboutPage() {
     <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <SectionHeader
         title="O nama"
-        description="Cvećara Irig je lokalna cvećara fokusirana na sveže bukete, ruže, flower box aranžmane, poklone i aranžmane za posebne prilike."
+        description="Online Cvećara Irig je lokalna cvećara fokusirana na sveže bukete, ruže, flower box aranžmane, poklone i aranžmane za posebne prilike."
       />
       <section className="mt-8 rounded-3xl bg-slate-50 p-6 text-slate-700">
         <h2 className="text-2xl font-semibold text-slate-900">Podaci o prodavcu</h2>

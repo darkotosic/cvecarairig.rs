@@ -11,7 +11,7 @@ CATEGORIES = [
     "Buketi", "Ruže", "Flower Box", "Korpe i aranžmani", "Pokloni", "Svadbe i proslave", "Saučešće", "Sezonsko cveće",
 ]
 SETTINGS = {
-    "company_name": "Cvećara Irig",
+    "company_name": "Online Cvećara Irig",
     "store_email": "info@cvecarairig.rs",
     "service_area": "Irig, Vrdnik, Rivica, Ruma i okolna mesta po dogovoru",
     "same_day_cutoff": "Dostava istog dana za potvrđene porudžbine do 15:00",

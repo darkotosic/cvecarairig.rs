@@ -29,7 +29,7 @@ publish = ".next"
 [build.environment]
 NODE_VERSION = "22"
 NEXT_PUBLIC_SITE_URL = "https://cvecarairig.rs"
-NEXT_PUBLIC_BRAND_NAME = "Cvećara Irig"
+NEXT_PUBLIC_BRAND_NAME = "Online Cvećara Irig"
 NEXT_PUBLIC_DEFAULT_LOCALE = "sr"
 
 [[plugins]]
@@ -47,7 +47,7 @@ API_BASE_URL=https://tvoj-render-backend.onrender.com
 NEXT_PUBLIC_API_BASE_URL=https://tvoj-render-backend.onrender.com
 NEXT_PUBLIC_SITE_URL=https://cvecarairig.rs
 ADMIN_ALLOWED_ORIGINS=https://cvecarairig.rs,https://www.cvecarairig.rs
-NEXT_PUBLIC_BRAND_NAME=Cvećara Irig
+NEXT_PUBLIC_BRAND_NAME=Online Cvećara Irig
 NEXT_PUBLIC_DEFAULT_LOCALE=sr
 NEXT_PUBLIC_INSTAGRAM_URL=
 NEXT_PUBLIC_FACEBOOK_URL=
@@ -119,7 +119,7 @@ JWT_ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=480
 ADMIN_EMAIL=darkotosic1986@gmail.com
 ADMIN_PASSWORD=<set-in-render-secret-env>
-ADMIN_FULL_NAME=Cvećara Irig Admin
+ADMIN_FULL_NAME=Online Cvećara Irig Admin
 ALLOW_PUBLIC_REGISTRATION=false
 BOOTSTRAP_ADMIN_TOKEN=privremeno-samo-za-prvo-kreiranje-admina
 RATE_LIMIT_DEFAULT=120/minute
@@ -131,7 +131,7 @@ SMTP_PORT=587
 SMTP_USERNAME=
 SMTP_PASSWORD=
 SMTP_FROM_EMAIL=
-SMTP_FROM_NAME=Cvećara Irig
+SMTP_FROM_NAME=Online Cvećara Irig
 MEDIA_PROVIDER=cloudinary
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=

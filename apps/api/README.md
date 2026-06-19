@@ -106,7 +106,7 @@ CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
 ADMIN_EMAIL=darkotosic1986@gmail.com
 ADMIN_PASSWORD=<local-admin-password>
-ADMIN_FULL_NAME=Cvećara Irig Admin
+ADMIN_FULL_NAME=Online Cvećara Irig Admin
 BOOTSTRAP_ADMIN_TOKEN=temporary-local-bootstrap-token
 ```
 
