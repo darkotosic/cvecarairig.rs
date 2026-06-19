@@ -153,7 +153,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <div>
               <p className="font-semibold text-primary">{brandName}</p>
               <p className="mt-2">
-                Cvećara u Irigu sa fokusom na sveže cveće, pažljivo aranžiranje i jasnu komunikaciju
+                Online Cvećara Irig sa fokusom na sveže cveće, pažljivo aranžiranje i jasnu komunikaciju
                 oko porudžbine i dostave.
               </p>
               {settings.company_address && <p className="mt-2">{settings.company_address}</p>}

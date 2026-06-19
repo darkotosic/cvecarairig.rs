@@ -42,7 +42,7 @@ export default async function HomePage() {
       <section className="bg-primary text-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-24">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-gold">cvecarairig.rs</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-gold">Online Cvećara Irig</p>
             <h1 className="mt-4 text-4xl font-bold sm:text-6xl">Cveće za svaki važan trenutak u Irigu i okolini.</h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-slate-200">Online Cvećara Irig nudi sveže bukete, ruže, flower box aranžmane i poklon aranžmane sa brzom potvrdom porudžbine i lokalnom dostavom.</p>
             <div className="mt-8 flex flex-wrap gap-3">

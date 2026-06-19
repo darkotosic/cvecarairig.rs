@@ -5,7 +5,7 @@ import { loadPublicStoreSettings } from '@/lib/store-settings';
 export const metadata: Metadata = {
   title: 'O nama',
   alternates: { canonical: '/about' },
-  description: 'Informacije o Cvećari Irig, kontaktima i načinu poručivanja cveća.',
+  description: 'Informacije o Online Cvećari Irig, kontaktima i načinu poručivanja cveća.',
 };
 
 export default async function AboutPage() {
