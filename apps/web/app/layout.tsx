@@ -64,6 +64,35 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: `${brandName} | Cveće, buketi i dostava`, template: `%s | ${brandName}` },
     description:
       'Cvećara Irig - sveži buketi, ruže, flower box aranžmani i dostava cveća u Irigu i okolini.',
+    applicationName: brandName,
+    manifest: '/site.webmanifest',
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+        { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+        { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+        { url: '/favicon-512x512.png', sizes: '512x512', type: 'image/png' },
+      ],
+      shortcut: [{ url: '/favicon.ico' }],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+      other: [
+        { rel: 'mask-icon', url: '/favicon.svg', color: '#7d8352' },
+        { rel: 'msapplication-TileImage', url: '/mstile-150x150.png' },
+      ],
+    },
+    appleWebApp: {
+      capable: true,
+      title: brandName,
+      statusBarStyle: 'default',
+    },
+    other: {
+      'msapplication-TileColor': '#f7edde',
+      'mobile-web-app-capable': 'yes',
+    },
     openGraph: {
       type: 'website',
       url: siteUrl,
