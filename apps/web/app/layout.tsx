@@ -54,6 +54,10 @@ function buildWebsiteJsonLd(brandName: string) {
   return { '@context': 'https://schema.org', '@type': 'WebSite', name: brandName, url: siteUrl };
 }
 
+function getHeaderBrandName(brandName: string) {
+  return brandName.trim() === 'Cvećara Irig' ? 'Online Cvećara Irig' : brandName;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await loadPublicStoreSettings();
   const brandName = settings.company_name ?? fallbackBrandName;
@@ -109,6 +113,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await loadPublicStoreSettings();
   const brandName = settings.company_name ?? fallbackBrandName;
+  const headerBrandName = getHeaderBrandName(brandName);
   const contactEmail = settings.store_email;
   const jsonLd = [buildOrganizationJsonLd(settings, brandName), buildWebsiteJsonLd(brandName)];
 
@@ -122,7 +127,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
           <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
             <Link href="/" className="text-xl font-bold tracking-wide text-primary">
-              {brandName}
+              {headerBrandName}
             </Link>
             <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-700">
               <Link href="/products" className="hover:text-primary">
