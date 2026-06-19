@@ -18,7 +18,7 @@ def test_seed_creates_categories_and_public_settings_without_duplicates(db):
 
     settings = {row.key: row for row in db.query(StoreSetting).all()}
     assert settings["company_name"].value == "Online Cvećara Irig"
-    assert settings["store_email"].value == "info@cvecarairig.rs"
+    assert settings["store_email"].value == "cvecaralotos022@gmail.com"
     assert settings["service_area"].is_public is True
 
 
@@ -36,7 +36,7 @@ def test_seed_creates_configured_admin_from_environment(db, monkeypatch):
         seed_cvecara_irig,
         "settings",
         SimpleNamespace(
-            ADMIN_EMAIL="darkotosic1986@gmail.com",
+            ADMIN_EMAIL="cvecaralotos022@gmail.com",
             ADMIN_PASSWORD="Secret123!",
             ADMIN_FULL_NAME="Online Cvećara Irig Admin",
         ),
@@ -44,7 +44,7 @@ def test_seed_creates_configured_admin_from_environment(db, monkeypatch):
 
     seed(db)
 
-    admin = db.query(User).filter(User.email == "darkotosic1986@gmail.com").one()
+    admin = db.query(User).filter(User.email == "cvecaralotos022@gmail.com").one()
     assert admin.is_admin is True
     assert admin.is_active is True
     assert admin.full_name == "Online Cvećara Irig Admin"
@@ -54,7 +54,7 @@ def test_seed_creates_configured_admin_from_environment(db, monkeypatch):
 def test_seed_promotes_existing_configured_admin_and_updates_password(db, monkeypatch):
     db.add(
         User(
-            email="darkotosic1986@gmail.com",
+            email="cvecaralotos022@gmail.com",
             full_name="Existing Admin",
             hashed_password="old-hash",
             is_admin=False,
@@ -66,7 +66,7 @@ def test_seed_promotes_existing_configured_admin_and_updates_password(db, monkey
         seed_cvecara_irig,
         "settings",
         SimpleNamespace(
-            ADMIN_EMAIL="darkotosic1986@gmail.com",
+            ADMIN_EMAIL="cvecaralotos022@gmail.com",
             ADMIN_PASSWORD="Secret123!",
             ADMIN_FULL_NAME="Online Cvećara Irig Admin",
         ),
@@ -74,7 +74,7 @@ def test_seed_promotes_existing_configured_admin_and_updates_password(db, monkey
 
     seed(db)
 
-    admin = db.query(User).filter(User.email == "darkotosic1986@gmail.com").one()
+    admin = db.query(User).filter(User.email == "cvecaralotos022@gmail.com").one()
     assert admin.is_admin is True
     assert admin.is_active is True
     assert admin.full_name == "Existing Admin"

@@ -2,7 +2,7 @@ from app.models.store_setting import StoreSetting
 
 
 def test_public_store_settings_filters_private_and_needs_no_auth(client, db):
-    db.add(StoreSetting(key="store_email", value="info@cvecarairig.rs", is_public=True))
+    db.add(StoreSetting(key="store_email", value="cvecaralotos022@gmail.com", is_public=True))
     db.add(StoreSetting(key="jwt_secret_note", value="private", is_public=True))
     db.add(StoreSetting(key="company_tax_id", value="123", is_public=False))
     db.add(StoreSetting(key="store_phone", value="+381 11 123 456", is_public=False))
@@ -13,7 +13,7 @@ def test_public_store_settings_filters_private_and_needs_no_auth(client, db):
     assert response.status_code == 200, response.text
     assert response.json() == {
         "store_phone": None,
-        "store_email": "info@cvecarairig.rs",
+        "store_email": "cvecaralotos022@gmail.com",
         "instagram_url": None,
         "facebook_url": None,
         "delivery_note": None,
