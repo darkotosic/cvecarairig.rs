@@ -10,9 +10,12 @@ from app.models.user import User
 CATEGORIES = [
     "Buketi", "Ruže", "Flower Box", "Korpe i aranžmani", "Pokloni", "Svadbe i proslave", "Saučešće", "Sezonsko cveće",
 ]
+CONTACT_EMAIL = "cvecaralotos022@gmail.com"
+LEGACY_CONTACT_EMAILS = {"info@cvecarairig.rs", "info@cvecara.irig.rs"}
+
 SETTINGS = {
     "company_name": "Online Cvećara Irig",
-    "store_email": "cvecaralotos022@gmail.com",
+    "store_email": CONTACT_EMAIL,
     "service_area": "Irig, Vrdnik, Rivica, Ruma i okolna mesta po dogovoru",
     "same_day_cutoff": "Dostava istog dana za potvrđene porudžbine do 15:00",
     "payment_methods": "Plaćanje pouzećem, uplata na račun ili po dogovoru",
@@ -55,8 +58,12 @@ def seed(db: Session) -> None:
         if not db.query(Category).filter(Category.slug == slug).first():
             db.add(Category(name=name, slug=slug, sort_order=index, is_active=True))
     for key, value in SETTINGS.items():
-        if not db.query(StoreSetting).filter(StoreSetting.key == key).first():
+        setting = db.query(StoreSetting).filter(StoreSetting.key == key).first()
+        if not setting:
             db.add(StoreSetting(key=key, value=value, value_type="string", is_public=True))
+            continue
+        if key == "store_email" and (not setting.value or setting.value.lower() in LEGACY_CONTACT_EMAILS):
+            setting.value = CONTACT_EMAIL
     db.commit()
 
 def main() -> None:

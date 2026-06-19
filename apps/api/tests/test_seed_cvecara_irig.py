@@ -31,6 +31,15 @@ def test_seed_does_not_overwrite_existing_settings(db):
     assert db.query(StoreSetting).filter(StoreSetting.key == "store_email").one().value == "custom@example.com"
 
 
+def test_seed_updates_legacy_public_contact_email(db):
+    db.add(StoreSetting(key="store_email", value="info@cvecarairig.rs", value_type="string", is_public=True))
+    db.commit()
+
+    seed(db)
+
+    assert db.query(StoreSetting).filter(StoreSetting.key == "store_email").one().value == "cvecaralotos022@gmail.com"
+
+
 def test_seed_creates_configured_admin_from_environment(db, monkeypatch):
     monkeypatch.setattr(
         seed_cvecara_irig,

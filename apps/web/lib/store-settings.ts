@@ -4,7 +4,7 @@ const optionalEnv = (value: string | undefined) => value?.trim() || null;
 
 export const fallbackStoreSettings = (): PublicStoreSettings => ({
   store_phone: optionalEnv(process.env.NEXT_PUBLIC_CONTACT_PHONE),
-  store_email: optionalEnv(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
+  store_email: optionalEnv(process.env.NEXT_PUBLIC_CONTACT_EMAIL) ?? 'cvecaralotos022@gmail.com',
   instagram_url: optionalEnv(process.env.NEXT_PUBLIC_INSTAGRAM_URL),
   facebook_url: optionalEnv(process.env.NEXT_PUBLIC_FACEBOOK_URL),
   delivery_note: optionalEnv(process.env.NEXT_PUBLIC_DELIVERY_NOTE),
