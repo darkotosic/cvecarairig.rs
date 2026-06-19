@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const image = primaryImage ?? fallbackImage;
     return {
       title: product.seo_title ?? `${product.name} | Online Cvećara Irig`,
-      description: product.seo_description ?? product.short_description ?? product.description ?? `Poručite ${product.name} u Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
+      description: product.seo_description ?? product.short_description ?? product.description ?? `Poručite ${product.name} u Online Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
       alternates: { canonical: `/products/${encodeURIComponent(product.slug)}` },
       openGraph: {
         title: product.name,
