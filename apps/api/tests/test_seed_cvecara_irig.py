@@ -17,7 +17,7 @@ def test_seed_creates_categories_and_public_settings_without_duplicates(db):
     assert {category.name for category in categories} == set(CATEGORIES)
 
     settings = {row.key: row for row in db.query(StoreSetting).all()}
-    assert settings["company_name"].value == "Cvećara Irig"
+    assert settings["company_name"].value == "Online Cvećara Irig"
     assert settings["store_email"].value == "info@cvecarairig.rs"
     assert settings["service_area"].is_public is True
 
@@ -38,7 +38,7 @@ def test_seed_creates_configured_admin_from_environment(db, monkeypatch):
         SimpleNamespace(
             ADMIN_EMAIL="darkotosic1986@gmail.com",
             ADMIN_PASSWORD="Secret123!",
-            ADMIN_FULL_NAME="Cvećara Irig Admin",
+            ADMIN_FULL_NAME="Online Cvećara Irig Admin",
         ),
     )
 
@@ -47,7 +47,7 @@ def test_seed_creates_configured_admin_from_environment(db, monkeypatch):
     admin = db.query(User).filter(User.email == "darkotosic1986@gmail.com").one()
     assert admin.is_admin is True
     assert admin.is_active is True
-    assert admin.full_name == "Cvećara Irig Admin"
+    assert admin.full_name == "Online Cvećara Irig Admin"
     assert verify_password("Secret123!", admin.hashed_password)
 
 
@@ -68,7 +68,7 @@ def test_seed_promotes_existing_configured_admin_and_updates_password(db, monkey
         SimpleNamespace(
             ADMIN_EMAIL="darkotosic1986@gmail.com",
             ADMIN_PASSWORD="Secret123!",
-            ADMIN_FULL_NAME="Cvećara Irig Admin",
+            ADMIN_FULL_NAME="Online Cvećara Irig Admin",
         ),
     )
 
