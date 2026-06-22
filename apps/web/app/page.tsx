@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 async function getFeatured(): Promise<{ products: Product[]; categories: Category[]; available: boolean }> {
   try {
-    const [products, categories] = await Promise.all([getProducts({ sort: 'sort_order', page_size: 4 }), getCategories()]);
+    const [products, categories] = await Promise.all([getProducts({ sort: 'sort_order', page_size: 12 }), getCategories()]);
     return { products: products.items, categories, available: true };
   } catch {
     return { products: [], categories: [], available: false };
