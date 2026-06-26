@@ -4,14 +4,7 @@ import { ProductGallery, getProductImages } from '@/components/ProductGallery';
 import { ProductPurchaseBox } from '@/components/ProductPurchaseBox';
 import { ApiError, getProduct } from '@/lib/api';
 import { loadPublicStoreSettings } from '@/lib/store-settings';
-
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
-const fallbackLogoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
-
-function absoluteUrl(url?: string | null): string | undefined {
-  if (!url) return undefined;
-  return url.startsWith('http://') || url.startsWith('https://') ? url : `${siteUrl}${url.startsWith('/') ? '' : '/'}${url}`;
-}
+import { absoluteUrl, buildBreadcrumbJsonLd, buildPageMetadata, buildProductJsonLd, fallbackLogoUrl, getBrandName, siteUrl } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -20,17 +13,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const primaryImage = absoluteUrl(getProductImages(product)[0]?.image_url);
     const fallbackImage = absoluteUrl(settings.logo_url) ?? absoluteUrl(fallbackLogoUrl);
     const image = primaryImage ?? fallbackImage;
-    return {
-      title: product.seo_title ?? `${product.name} | Online Cvećara Irig`,
-      description: product.seo_description ?? product.short_description ?? product.description ?? `Poručite ${product.name} u Online Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
-      alternates: { canonical: `/products/${encodeURIComponent(product.slug)}` },
-      openGraph: {
-        title: product.name,
-        description: product.short_description ?? product.description ?? undefined,
-        url: `${siteUrl}/products/${encodeURIComponent(product.slug)}`,
-        images: image ? [{ url: image, alt: primaryImage ? product.name : `${settings.company_name ?? 'Online Cvećara Irig'} logo` }] : undefined,
-      },
-    };
+    return buildPageMetadata({
+      title: product.seo_title ?? product.name,
+      description:
+        product.seo_description ??
+        product.short_description ??
+        product.description ??
+        `Poručite ${product.name} u Online Cvećari Irig. Buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.`,
+      path: `/products/${encodeURIComponent(product.slug)}`,
+      image,
+      brandName: getBrandName(settings),
+    });
   } catch {
     return { title: 'Proizvod' };
   }
@@ -51,30 +44,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const fallbackImage = absoluteUrl(settings.logo_url) ?? absoluteUrl(fallbackLogoUrl);
   const imageUrls = images.map((image) => absoluteUrl(image.image_url)).filter((url): url is string => Boolean(url));
   const jsonLdImages = imageUrls.length > 0 ? imageUrls : fallbackImage ? [fallbackImage] : [];
-  const stock = product.effective_stock_quantity ?? product.stock_quantity;
   const productUrl = `${siteUrl}/products/${encodeURIComponent(product.slug)}`;
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    ...(product.seo_description || product.short_description || product.description
-      ? { description: product.seo_description ?? product.short_description ?? product.description }
-      : {}),
-    image: jsonLdImages,
-    sku: product.sku ?? product.variants?.find((variant) => variant.sku)?.sku ?? String(product.id),
-    url: productUrl,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'RSD',
-      price: (product.price_cents / 100).toFixed(2),
-      availability: stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: productUrl,
-    },
-  };
+  const brandName = getBrandName(settings);
+  const productJsonLd = buildProductJsonLd(product, jsonLdImages, productUrl, brandName);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Početna', path: '/' },
+    { name: 'Aranžmani', path: '/products' },
+    { name: product.name, path: `/products/${product.slug}` },
+  ]);
 
   return (
     <main className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:px-8">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([productJsonLd, breadcrumbJsonLd]) }} />
       <ProductGallery product={product} />
       <section>
         <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">{product.category?.name}</p>

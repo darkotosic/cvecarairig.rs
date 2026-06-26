@@ -4,18 +4,8 @@ import { StickyCallButton } from '@/components/StickyCallButton';
 import { GLOBAL_CTA_PHONE, normalizeTelHref } from '@/lib/contact';
 import { loadPublicStoreSettings } from '@/lib/store-settings';
 import type { PublicStoreSettings } from '@/lib/api';
+import { absoluteUrl, fallbackBrandName, fallbackLogoUrl, siteUrl } from '@/lib/seo';
 import '../styles/globals.css';
-
-const fallbackBrandName = process.env.NEXT_PUBLIC_BRAND_NAME ?? 'Online Cvećara Irig';
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
-const fallbackLogoUrl = process.env.NEXT_PUBLIC_LOGO_URL;
-
-function absoluteUrl(url?: string | null): string | undefined {
-  if (!url) return undefined;
-  return url.startsWith('http://') || url.startsWith('https://')
-    ? url
-    : `${siteUrl}${url.startsWith('/') ? '' : '/'}${url}`;
-}
 
 function buildOrganizationJsonLd(settings: PublicStoreSettings, brandName: string) {
   const sameAs = [settings.instagram_url, settings.facebook_url].filter((url): url is string =>
@@ -51,7 +41,17 @@ function buildOrganizationJsonLd(settings: PublicStoreSettings, brandName: strin
 }
 
 function buildWebsiteJsonLd(brandName: string) {
-  return { '@context': 'https://schema.org', '@type': 'WebSite', name: brandName, url: siteUrl };
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: brandName,
+    url: siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteUrl}/products?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
 }
 
 function getHeaderBrandName(brandName: string) {
@@ -97,6 +97,10 @@ export async function generateMetadata(): Promise<Metadata> {
       'msapplication-TileColor': '#f7edde',
       'mobile-web-app-capable': 'yes',
     },
+    alternates: { canonical: '/' },
+    robots: { index: true, follow: true },
+    category: 'Florist e-commerce',
+    keywords: ['cvećara Irig', 'dostava cveća Irig', 'buketi Irig', 'ruže Irig', 'cvetni aranžmani'],
     openGraph: {
       type: 'website',
       url: siteUrl,
@@ -104,9 +108,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${brandName} | Cveće, buketi i dostava`,
       description:
         'Buketi, ruže i cvetni aranžmani za rođendane, godišnjice, slave, svadbe i posebne trenutke.',
+      locale: 'sr_RS',
       images: logoUrl ? [{ url: logoUrl, alt: `${brandName} logo` }] : undefined,
     },
-    twitter: { card: 'summary_large_image' },
+    twitter: { card: 'summary_large_image', title: `${brandName} | Cveće, buketi i dostava`, description: 'Sveži buketi, ruže i cvetni aranžmani sa lokalnom dostavom u Irigu i okolini.', images: logoUrl ? [logoUrl] : undefined },
   };
 }
 

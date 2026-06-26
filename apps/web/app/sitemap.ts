@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import type { Product, ProductListResponse } from '@/lib/api';
+import type { Category, Product, ProductListResponse } from '@/lib/api';
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
 const apiBaseUrl = (process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL)?.replace(/\/$/, '');
@@ -25,6 +25,26 @@ function buildStaticRoutes(lastModified: Date): MetadataRoute.Sitemap {
     changeFrequency: path === '' || path === '/products' ? 'daily' : 'monthly',
     priority: path === '' ? 1 : path === '/products' ? 0.9 : 0.6,
   }));
+}
+
+async function fetchCategories(): Promise<Category[]> {
+  if (!apiBaseUrl) return [];
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), sitemapFetchTimeoutMs);
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/v1/categories/`, {
+      headers: { Accept: 'application/json' },
+      next: { revalidate: 300 },
+      signal: controller.signal,
+    });
+
+    if (!response.ok) throw new Error(`Categories API returned ${response.status}`);
+    return response.json() as Promise<Category[]>;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 async function fetchProductsPage(page: number, pageSize: number): Promise<ProductListResponse> {
@@ -82,7 +102,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-    return [...staticRoutes, ...productRoutes];
+    const categories = await fetchCategories().catch(() => []);
+    const categoryRoutes: MetadataRoute.Sitemap = categories
+      .filter((category) => category.is_active && category.slug)
+      .map((category) => ({
+        url: `${siteUrl}/products?category=${encodeURIComponent(category.slug)}`,
+        lastModified: generatedAt,
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      }));
+
+    return [...staticRoutes, ...categoryRoutes, ...productRoutes];
   } catch (error) {
     console.warn('Sitemap product URLs could not be loaded; serving static sitemap routes.', error);
     return staticRoutes;
