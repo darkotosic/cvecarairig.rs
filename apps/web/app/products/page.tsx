@@ -1,12 +1,26 @@
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import type { Metadata, ResolvingMetadata } from 'next';
 import { SectionHeader } from '@/components/SectionHeader';
 import { ProductFilters } from '@/components/ProductFilters';
 import { ProductGrid } from '@/components/ProductGrid';
 import { getCategories, getProducts, type Category, type ProductListResponse } from '@/lib/api';
 import { loadPublicStoreSettings } from '@/lib/store-settings';
+import { buildBreadcrumbJsonLd, buildPageMetadata, getBrandName } from '@/lib/seo';
 
-export const metadata: Metadata = { title: 'Aranžmani', description: 'Pregled Online Cvećara Irig aranžmana sa filterima, kategorijama i sortiranjem.' };
+export async function generateMetadata({ searchParams }: { searchParams: SearchParams }, _parent: ResolvingMetadata): Promise<Metadata> {
+  const raw = await searchParams;
+  const category = first(raw.category);
+  const query = first(raw.q);
+  const page = first(raw.page);
+  const settings = await loadPublicStoreSettings();
+  const brandName = getBrandName(settings);
+  const title = category ? `Cvetni aranžmani - ${category}` : query ? `Pretraga aranžmana - ${query}` : 'Aranžmani';
+  const description = category
+    ? `Sveži cvetni aranžmani iz kategorije ${category} sa lokalnom dostavom u Irigu i okolini.`
+    : 'Katalog svežih buketa, ruža, flower box aranžmana i poklon aranžmana za lokalnu dostavu u Irigu i okolini.';
+  const path = createPageHref({ q: query, category, page }, page ? Number(page) || 1 : 1);
+  return buildPageMetadata({ title, description, path, brandName, noIndex: Boolean(query || page) });
+}
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
@@ -64,10 +78,12 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
     page: toPage(uiParams.page),
   };
   const [catalog, settings] = await Promise.all([loadCatalog(apiParams), loadPublicStoreSettings()]);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([{ name: 'Početna', path: '/' }, { name: 'Aranžmani', path: '/products' }]);
 
   if (!catalog) {
     return (
       <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
         <SectionHeader eyebrow="Cvećara" title="Aranžmani" description="Katalog trenutno nije dostupan. Pokušajte kasnije." />
         <div className="mt-8 border border-amber-200 bg-amber-50 p-6 text-amber-900">Katalog trenutno nije dostupan. Pokušajte kasnije.</div>
       </main>
@@ -80,6 +96,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <SectionHeader eyebrow="Cvećara" title="Aranžmani" description="Katalog svežih buketa, ruža, flower box aranžmana i poklon aranžmana za lokalnu dostavu." />
       <div className="mt-8 grid gap-6 lg:grid-cols-[280px_1fr]">
         <ProductFilters categories={catalog.categories} searchParams={uiParams} />
