@@ -9,8 +9,20 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #f8fafc;
-  color: #111827;
+  background: #f5f0e6;
+  color: #2d3027;
+}
+
+::selection {
+  background: #c5a46d;
+  color: #2d3027;
+}
+
+input,
+select {
+  border-color: #d8cfbd;
+  background: #fffdf8;
+  color: #2d3027;
 }
 
 * {
