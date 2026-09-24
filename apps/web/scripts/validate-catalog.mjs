@@ -34,8 +34,16 @@ for (const product of products) {
   if (!categoryIds.has(product.categoryId)) {
     errors.push(`${product.sku}: nepoznata kategorija ${product.categoryId}`);
   }
-  if (product.priceRsd !== null && (!(product.priceRsd > 0) || !Number.isFinite(product.priceRsd))) {
-    errors.push(`${product.sku}: cena mora biti pozitivna ili null`);
+  if (typeof product.priceRsd !== 'number' || !Number.isFinite(product.priceRsd) || product.priceRsd <= 0) {
+    errors.push(`${product.sku}: priceRsd mora biti pozitivna RSD cena`);
+  }
+  if (
+    product.compareAtPriceRsd != null &&
+    (typeof product.compareAtPriceRsd !== 'number' ||
+      !Number.isFinite(product.compareAtPriceRsd) ||
+      product.compareAtPriceRsd <= product.priceRsd)
+  ) {
+    errors.push(`${product.sku}: compareAtPriceRsd mora biti veći od priceRsd`);
   }
   if (!Number.isInteger(product.sortOrder) || product.sortOrder < 0) {
     errors.push(`${product.sku}: sortOrder nije validan`);
@@ -47,7 +55,7 @@ for (const product of products) {
       errors.push(`${product.sku}: neispravan/dupliran ID varijante`);
     }
     variantIds.add(variant.id);
-    if (variant.priceRsd != null && variant.priceRsd <= 0) {
+    if (typeof variant.priceRsd !== 'number' || !Number.isFinite(variant.priceRsd) || variant.priceRsd <= 0) {
       errors.push(`${product.sku}/${variant.id}: cena varijante nije validna`);
     }
   }
