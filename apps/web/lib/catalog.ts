@@ -14,8 +14,8 @@ export const getProductsByCategory = (categoryId: string) => getActiveProducts()
 export type ProductSort = 'recommended' | 'price_asc' | 'price_desc' | 'name_asc';
 export function filterProducts(items: Product[], options: { query?: string; categoryId?: string; minPrice?: number; maxPrice?: number }) {
   const query = options.query?.trim().toLocaleLowerCase('sr') ?? '';
-  return items.filter((product) => (!query || `${product.name} ${product.shortDescription} ${product.sku}`.toLocaleLowerCase('sr').includes(query)) && (!options.categoryId || product.categoryId === options.categoryId) && (options.minPrice === undefined || product.priceRsd === null || product.priceRsd >= options.minPrice) && (options.maxPrice === undefined || product.priceRsd === null || product.priceRsd <= options.maxPrice));
+  return items.filter((product) => (!query || `${product.name} ${product.shortDescription} ${product.sku}`.toLocaleLowerCase('sr').includes(query)) && (!options.categoryId || product.categoryId === options.categoryId) && (options.minPrice === undefined || product.priceRsd >= options.minPrice) && (options.maxPrice === undefined || product.priceRsd <= options.maxPrice));
 }
 export function sortProducts(items: Product[], sort: ProductSort) {
-  return [...items].sort((a, b) => sort === 'name_asc' ? a.name.localeCompare(b.name, 'sr') : sort === 'price_asc' ? (a.priceRsd ?? Infinity) - (b.priceRsd ?? Infinity) : sort === 'price_desc' ? (b.priceRsd ?? -Infinity) - (a.priceRsd ?? -Infinity) : a.sortOrder - b.sortOrder);
+  return [...items].sort((a, b) => sort === 'name_asc' ? a.name.localeCompare(b.name, 'sr') : sort === 'price_asc' ? a.priceRsd - b.priceRsd : sort === 'price_desc' ? b.priceRsd - a.priceRsd : a.sortOrder - b.sortOrder);
 }
