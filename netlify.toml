@@ -1,24 +1,32 @@
 [build]
 base = "apps/web"
 command = "npm run build"
-publish = ".next"
+publish = "out"
 
 [build.environment]
 NODE_VERSION = "22"
-NEXT_PUBLIC_SITE_URL = "https://cvecarairig.rs"
-NEXT_PUBLIC_BRAND_NAME = "Online Cvećara Irig"
-NEXT_PUBLIC_DEFAULT_LOCALE = "sr"
-NEXT_PUBLIC_CONTACT_EMAIL = "cvecaralotos022@gmail.com"
-ADMIN_ALLOWED_ORIGINS = "https://cvecarairig.rs,https://www.cvecarairig.rs"
 
-[[plugins]]
-package = "@netlify/plugin-nextjs"
+[[redirects]]
+from = "/cart"
+to = "/products"
+status = 301
+[[redirects]]
+from = "/checkout/*"
+to = "/contact"
+status = 301
+[[redirects]]
+from = "/admin/*"
+to = "/"
+status = 301
 
 [[headers]]
 for = "/_next/static/*"
 [headers.values]
-Cache-Control = "max-age=31536000, immutable"
-
+Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+for = "/proizvodi/*"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "/*"
 [headers.values]

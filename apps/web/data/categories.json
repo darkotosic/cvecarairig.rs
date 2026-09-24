@@ -1,0 +1,18 @@
+[
+  {
+    "id": "birthday",
+    "slug": "rodjendani",
+    "name": "Rođendanski aranžmani",
+    "description": "Buketi i cvetni aranžmani za rođendanske trenutke.",
+    "sortOrder": 1,
+    "active": true
+  },
+  {
+    "id": "anniversary",
+    "slug": "godisnjice",
+    "name": "Godišnjice",
+    "description": "Cvetni aranžmani za godišnjice i zajedničke trenutke.",
+    "sortOrder": 2,
+    "active": true
+  }
+]

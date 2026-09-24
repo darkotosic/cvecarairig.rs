@@ -1,58 +1,14 @@
-'use client';
-
 /* eslint-disable @next/next/no-img-element */
-
 import Link from 'next/link';
-import { useState } from 'react';
-import type { Product } from '@/lib/api';
+import type { Product } from '@/lib/types';
+import { getCategoryById } from '@/lib/catalog';
 import { CallToOrderButton } from './CallToOrderButton';
 import { Price } from './Price';
-
-function getPrimaryImage(product: Product) {
-  const sortedImages = [...(product.images ?? [])].sort((a, b) => Number(b.is_primary) - Number(a.is_primary) || a.sort_order - b.sort_order || a.id - b.id);
-  return sortedImages[0]?.image_url ?? product.image_url;
-}
-
-export function ProductCard({ product, phone }: { product: Product; phone?: string | null }) {
-  const productHref = `/products/${encodeURIComponent(product.slug)}`;
-  const [imageFailed, setImageFailed] = useState(false);
-  const image = getPrimaryImage(product);
-  const stock = product.effective_stock_quantity ?? product.stock_quantity;
-  const hasVariants = product.variants?.some((variant) => variant.is_active) ?? false;
-  const hasDiscount = Boolean(product.compare_at_price_cents && product.compare_at_price_cents > product.price_cents);
-
-  return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      <Link href={productHref} className="relative block aspect-[4/5] bg-slate-100">
-        {image && !imageFailed ? (
-          <img src={image} alt={`${product.name} - primarna slika proizvoda`} onError={() => setImageFailed(true)} className="h-full w-full object-cover transition group-hover:scale-105" />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-slate-50 to-slate-200 px-6 text-center text-sm font-medium text-slate-500">
-            Slika za {product.name} uskoro
-          </div>
-        )}
-        {hasVariants && <span className="absolute left-3 top-3 rounded-full bg-blue-700 px-3 py-1 text-xs font-semibold text-white shadow-sm">Dostupno po varijantama</span>}
-        {!hasVariants && stock <= 0 && <span className="absolute left-3 top-3 rounded-full bg-red-700 px-3 py-1 text-xs font-semibold text-white shadow-sm">Nema na stanju</span>}
-        {hasDiscount && <span className="absolute right-3 top-3 rounded-full bg-gold px-3 py-1 text-xs font-semibold text-primary">Sniženo</span>}
-      </Link>
-      <div className="flex flex-1 flex-col p-5">
-        <p className="text-sm text-slate-500">{product.category?.name ?? product.sku ?? 'Online Cvećara Irig'}</p>
-        <Link href={productHref} className="mt-1 text-lg font-semibold text-primary hover:underline">{product.name}</Link>
-        {product.short_description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{product.short_description}</p>}
-        <div className="mt-3 flex flex-wrap items-baseline gap-2">
-          <p className="font-bold"><Price cents={product.price_cents} currency={product.currency} /></p>
-          {hasDiscount && (
-            <p className="text-sm text-slate-500">
-              <span className="sr-only">Stara cena </span>
-              <span className="line-through"><Price cents={product.compare_at_price_cents ?? 0} currency={product.currency} /></span>
-            </p>
-          )}
-        </div>
-        {hasVariants && <p className="mt-2 text-xs font-medium text-slate-500">Dostupne varijante - detalje i dostupnost potvrđujemo telefonom.</p>}
-        <div className="mt-auto pt-4">
-          <CallToOrderButton phone={phone} productName={product.name} />
-        </div>
-      </div>
-    </article>
-  );
+export function ProductCard({ product }: { product: Product; phone?: string | null }) {
+ const category = getCategoryById(product.categoryId);
+ const discount = product.priceRsd !== null && product.compareAtPriceRsd != null && product.compareAtPriceRsd > product.priceRsd;
+ return <article className="flex overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+  <div className="flex w-full flex-col"><Link href={`/products/${product.slug}`} className="relative block overflow-hidden"><img src={product.image} alt={`${product.name} — cvetni aranžman`} width="1254" height="1254" loading="lazy" decoding="async" className="aspect-square w-full bg-slate-100 object-cover" />{discount && <span className="absolute right-3 top-3 rounded-full bg-gold px-3 py-1 text-xs font-semibold text-primary">Sniženo</span>}</Link>
+  <div className="flex flex-1 flex-col p-5"><p className="text-sm text-slate-500">{category?.name ?? product.sku}</p><Link href={`/products/${product.slug}`} className="mt-1 text-lg font-semibold text-primary hover:underline">{product.name}</Link><p className="mt-2 line-clamp-2 text-sm text-slate-600">{product.shortDescription}</p><div className="mt-3 flex gap-2 font-bold"><Price value={product.priceRsd} />{discount && <span className="text-sm font-normal text-slate-500 line-through"><Price value={product.compareAtPriceRsd ?? null} /></span>}</div><div className="mt-auto pt-4"><CallToOrderButton productName={product.name} /></div></div></div>
+ </article>;
 }
