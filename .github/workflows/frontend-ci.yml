@@ -1,37 +1,22 @@
 name: Frontend CI
-
 on:
   push:
-    branches: [main, develop]
-    paths:
-      - 'apps/web/**'
-      - '.github/workflows/frontend-ci.yml'
   pull_request:
-    branches: [main, develop]
-    paths:
-      - 'apps/web/**'
-      - '.github/workflows/frontend-ci.yml'
-
 jobs:
-  test-build:
+  quality:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 22
           cache: npm
           cache-dependency-path: apps/web/package-lock.json
-      - name: Install dependencies
-        working-directory: apps/web
-        run: npm ci
-      - name: Lint
-        working-directory: apps/web
-        run: npm run lint
-      - name: Type check
-        working-directory: apps/web
-        run: npm run type-check
-      - name: Build
-        working-directory: apps/web
-        run: npm run build
+      - run: npm ci
+      - run: npm run validate:catalog
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm run build

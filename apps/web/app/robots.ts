@@ -1,16 +1,1 @@
-import type { MetadataRoute } from 'next';
-
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cvecarairig.rs').replace(/\/$/, '');
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-        disallow: ['/admin', '/api/admin', '/checkout', '/checkout/success', '/*?q=', '/*?page='],
-      },
-    ],
-    sitemap: `${siteUrl}/sitemap.xml`,
-  };
-}
+import type {MetadataRoute} from 'next';export const dynamic = 'force-static';export default function robots():MetadataRoute.Robots{return{rules:{userAgent:'*',allow:'/',disallow:['/*?q=','/*?page=']},sitemap:'https://cvecarairig.rs/sitemap.xml'}}
