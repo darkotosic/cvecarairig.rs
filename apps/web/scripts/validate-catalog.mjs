@@ -1,2 +1,92 @@
-import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
-const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');const products=JSON.parse(fs.readFileSync(path.join(root,'data/products.json'),'utf8'));const categories=JSON.parse(fs.readFileSync(path.join(root,'data/categories.json'),'utf8'));const errors=[],warnings=[];const unique=(field)=>{const seen=new Set();for(const p of products){const v=p[field];if(!v)errors.push(`${field} nedostaje: ${p.id??'nepoznat proizvod'}`);else if(seen.has(v))errors.push(`Duplikat ${field}: ${v}`);seen.add(v)}};['id','sku','slug'].forEach(unique);const categoryIds=new Set(categories.map(c=>c.id));const referenced=new Set();for(const p of products){for(const field of ['name','shortDescription','description','seoTitle','seoDescription'])if(typeof p[field]!=='string'||!p[field].trim())errors.push(`${p.sku}: ${field} nedostaje`);if(!categoryIds.has(p.categoryId))errors.push(`${p.sku}: nepoznata kategorija ${p.categoryId}`);if(p.priceRsd!==null&&(!(p.priceRsd>0)||!Number.isFinite(p.priceRsd)))errors.push(`${p.sku}: cena mora biti pozitivna ili null`);if(!Number.isInteger(p.sortOrder)||p.sortOrder<0)errors.push(`${p.sku}: sortOrder nije validan`);const ids=new Set();for(const v of p.variants??[]){if(!v.id||ids.has(v.id))errors.push(`${p.sku}: neispravan/dupliran ID varijante`);ids.add(v.id);if(v.priceRsd!=null&&v.priceRsd<=0)errors.push(`${p.sku}/${v.id}: cena varijante nije validna`)}for(const image of [p.image,...(p.images??[])]){if(!image)continue;if(/^https?:\/\//i.test(image))errors.push(`${p.sku}: udaljena slika nije dozvoljena`);const normalized=image.replace(/^\//,'');referenced.add(normalized);if(!fs.existsSync(path.join(root,'public',normalized)))errors.push(`${p.sku}: slika ne postoji: ${image}`)}if(p.active&&!p.image)errors.push(`${p.sku}: aktivan proizvod nema sliku`);if(/placeholder/i.test(p.image??''))warnings.push(`${p.sku}: koristi placeholder`)}const dir=path.join(root,'public/proizvodi');for(const name of fs.readdirSync(dir)){const rel=`proizvodi/${name}`;if(name!=='.gitkeep'&&!referenced.has(rel))warnings.push(`Nereferencirana slika: /${rel}`)}warnings.forEach(x=>console.warn(`UPOZORENJE: ${x}`));if(errors.length){errors.forEach(x=>console.error(`GREŠKA: ${x}`));process.exit(1)}console.log(`Katalog je validan: ${products.length} proizvoda, ${categories.length} kategorije.`);
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const products = JSON.parse(fs.readFileSync(path.join(root, 'data/products.json'), 'utf8'));
+const categories = JSON.parse(fs.readFileSync(path.join(root, 'data/categories.json'), 'utf8'));
+const errors = [];
+const warnings = [];
+const productImageNamePattern = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|webp)$/;
+
+const unique = (field) => {
+  const seen = new Set();
+  for (const product of products) {
+    const value = product[field];
+    if (!value) errors.push(`${field} nedostaje: ${product.id ?? 'nepoznat proizvod'}`);
+    else if (seen.has(value)) errors.push(`Duplikat ${field}: ${value}`);
+    seen.add(value);
+  }
+};
+
+['id', 'sku', 'slug'].forEach(unique);
+
+const categoryIds = new Set(categories.map((category) => category.id));
+const referenced = new Set();
+
+for (const product of products) {
+  for (const field of ['name', 'shortDescription', 'description', 'seoTitle', 'seoDescription']) {
+    if (typeof product[field] !== 'string' || !product[field].trim()) {
+      errors.push(`${product.sku}: ${field} nedostaje`);
+    }
+  }
+
+  if (!categoryIds.has(product.categoryId)) {
+    errors.push(`${product.sku}: nepoznata kategorija ${product.categoryId}`);
+  }
+  if (product.priceRsd !== null && (!(product.priceRsd > 0) || !Number.isFinite(product.priceRsd))) {
+    errors.push(`${product.sku}: cena mora biti pozitivna ili null`);
+  }
+  if (!Number.isInteger(product.sortOrder) || product.sortOrder < 0) {
+    errors.push(`${product.sku}: sortOrder nije validan`);
+  }
+
+  const variantIds = new Set();
+  for (const variant of product.variants ?? []) {
+    if (!variant.id || variantIds.has(variant.id)) {
+      errors.push(`${product.sku}: neispravan/dupliran ID varijante`);
+    }
+    variantIds.add(variant.id);
+    if (variant.priceRsd != null && variant.priceRsd <= 0) {
+      errors.push(`${product.sku}/${variant.id}: cena varijante nije validna`);
+    }
+  }
+
+  for (const image of [product.image, ...(product.images ?? [])]) {
+    if (!image) continue;
+    if (/^https?:\/\//i.test(image)) errors.push(`${product.sku}: udaljena slika nije dozvoljena`);
+
+    const normalized = image.replace(/^\//, '');
+    const imageName = path.basename(normalized);
+    referenced.add(normalized);
+
+    if (!productImageNamePattern.test(imageName)) {
+      errors.push(`${product.sku}: naziv slike mora biti ASCII kebab-case: ${image}`);
+    }
+    if (!fs.existsSync(path.join(root, 'public', normalized))) {
+      errors.push(`${product.sku}: slika ne postoji: ${image}`);
+    }
+  }
+
+  if (product.active && !product.image) errors.push(`${product.sku}: aktivan proizvod nema sliku`);
+  if (/placeholder/i.test(product.image ?? '')) warnings.push(`${product.sku}: koristi placeholder`);
+}
+
+const productImagesDirectory = path.join(root, 'public/proizvodi');
+for (const name of fs.readdirSync(productImagesDirectory)) {
+  if (name === '.gitkeep') continue;
+
+  const relativePath = `proizvodi/${name}`;
+  if (!productImageNamePattern.test(name)) {
+    errors.push(`Neispravan naziv slike za deploy: /${relativePath}`);
+  }
+  if (!referenced.has(relativePath)) warnings.push(`Nereferencirana slika: /${relativePath}`);
+}
+
+warnings.forEach((warning) => console.warn(`UPOZORENJE: ${warning}`));
+if (errors.length) {
+  errors.forEach((error) => console.error(`GREŠKA: ${error}`));
+  process.exit(1);
+}
+
+console.log(`Katalog je validan: ${products.length} proizvoda, ${categories.length} kategorije.`);
