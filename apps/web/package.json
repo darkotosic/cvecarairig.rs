@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "validate:catalog": "node scripts/validate-catalog.mjs",
-    "prebuild": "npm run validate:catalog"
+    "generate:image-sitemap": "node scripts/generate-image-sitemap.mjs",
+    "validate:seo-images": "node scripts/validate-seo-images.mjs",
+    "prebuild": "npm run validate:catalog && npm run generate:image-sitemap && npm run validate:seo-images"
   },
   "dependencies": {
     "next": "^16.2.4",

@@ -17,6 +17,8 @@ jobs:
           cache-dependency-path: apps/web/package-lock.json
       - run: npm ci
       - run: npm run validate:catalog
+      - run: npm run generate:image-sitemap
+      - run: npm run validate:seo-images
       - run: npm run lint
       - run: npm run type-check
       - run: npm run build

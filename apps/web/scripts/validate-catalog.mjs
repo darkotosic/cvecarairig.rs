@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const products = JSON.parse(fs.readFileSync(path.join(root, 'data/products.json'), 'utf8'));
@@ -63,17 +64,35 @@ for (const product of products) {
   for (const image of [product.image, ...(product.images ?? [])]) {
     if (!image) continue;
     if (/^https?:\/\//i.test(image)) errors.push(`${product.sku}: udaljena slika nije dozvoljena`);
+    if (!image.startsWith('/')) errors.push(`${product.sku}: putanja slike mora početi kosom crtom: ${image}`);
 
     const normalized = image.replace(/^\//, '');
     const imageName = path.basename(normalized);
+    const imagePath = path.resolve(root, 'public', normalized);
     referenced.add(normalized);
+
+    if (!imagePath.startsWith(`${path.join(root, 'public')}${path.sep}`)) {
+      errors.push(`${product.sku}: putanja slike izlazi iz public direktorijuma: ${image}`);
+      continue;
+    }
 
     if (!productImageNamePattern.test(imageName)) {
       errors.push(`${product.sku}: naziv slike mora biti ASCII kebab-case: ${image}`);
     }
-    if (!fs.existsSync(path.join(root, 'public', normalized))) {
+    if (!fs.existsSync(imagePath)) {
       errors.push(`${product.sku}: slika ne postoji: ${image}`);
+    } else {
+      if (fs.statSync(imagePath).size === 0) errors.push(`${product.sku}: slika je prazna: ${image}`);
+      try {
+        const metadata = await sharp(imagePath).metadata();
+        if (!metadata.width || !metadata.height || metadata.width < 300 || metadata.height < 300 || metadata.width * metadata.height < 50_000) {
+          errors.push(`${product.sku}: slika mora biti najmanje 300x300 px: ${image}`);
+        }
+      } catch {
+        errors.push(`${product.sku}: dimenzije slike nije moguće pročitati: ${image}`);
+      }
     }
+    if (/^(?:image\d*|photo\d*|img\d*)\.(?:png|webp)$/i.test(imageName)) warnings.push(`${product.sku}: generički naziv slike: ${image}`);
   }
 
   if (product.active && !product.image) errors.push(`${product.sku}: aktivan proizvod nema sliku`);
